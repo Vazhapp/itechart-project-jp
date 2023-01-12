@@ -1,0 +1,42 @@
+[versions]
+# versions of dependenciesA
+retrofit = "2.9.0"
+retofit-logging-interceptor = "4.10.0"
+google-hilt = "2.42"
+coil = "2.2.2"
+moshi = "1.14.0"
+moshi-converter = "1.14.0"
+coroutine = "1.6.4"
+viewmodel-lifecycle = "2.5.1"
+room = "2.4.3"
+datastore = "1.0.0"
+
+[libraries]
+# libraries
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "retofit-logging-interceptor" }
+
+moshi-core = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+moshi-converter = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "moshi-converter"}
+moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil"}
+
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "google-hilt" }
+hilt-androidCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "google-hilt" }
+hilt-compiler = "androidx.hilt:hilt-compiler:1.0.0"
+
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutine" }
+
+androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel-lifecycle" }
+androidx-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "viewmodel-lifecycle" }
+androidx-lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "viewmodel-lifecycle" }
+
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore"}
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore"}
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore"}
+
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-runtime", version.ref = "room"}
+androidx-room-compiler = { module = "androidx.room:room-runtime", version.ref = "room"}

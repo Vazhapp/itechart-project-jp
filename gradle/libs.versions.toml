@@ -40,3 +40,19 @@ androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "d
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-runtime", version.ref = "room"}
 androidx-room-compiler = { module = "androidx.room:room-runtime", version.ref = "room"}
+
+[bundles]
+retrofit = [
+    "retrofit",
+    "logging-interceptor"
+]
+
+moshi = [
+    "moshi-core",
+    "moshi-converter"
+]
+
+coroutines = [
+    "coroutines-core",
+    "coroutines-android"
+]

@@ -26,9 +26,12 @@ android {
     productFlavors {
         prod {
             dimension "environment"
+            applicationNameSuffix "-release"
         }
         dev {
             dimension "environment"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev.vazhapp"
         }
     }
 

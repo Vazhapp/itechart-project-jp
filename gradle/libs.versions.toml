@@ -15,6 +15,7 @@ datastore = "1.0.0"
 # libraries
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "retofit-logging-interceptor" }
+converter = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 
 moshi-core = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-converter = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "moshi-converter"}
@@ -44,7 +45,8 @@ androidx-room-compiler = { module = "androidx.room:room-runtime", version.ref = 
 [bundles]
 retrofit = [
     "retrofit",
-    "logging-interceptor"
+    "logging-interceptor",
+    "converter"
 ]
 
 moshi = [

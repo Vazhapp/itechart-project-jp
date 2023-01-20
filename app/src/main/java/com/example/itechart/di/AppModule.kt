@@ -1,13 +1,12 @@
 package com.example.itechart.di
 
-import android.content.Context
 import com.example.itechart.BuildConfig
+import com.example.itechart.common.KeyInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,7 +23,9 @@ object AppModule {
         .addInterceptor(
             HttpLoggingInterceptor()
             .apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
-        ).build()
+        )
+        .addInterceptor(KeyInterceptor())
+        .build()
 
     @Provides
     @Singleton
@@ -38,7 +39,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.TEST_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()

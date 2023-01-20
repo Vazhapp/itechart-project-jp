@@ -10,3 +10,4 @@ plugins {
 
     id 'com.google.dagger.hilt.android' version '2.42' apply false
 }
+apply from: 'buildConfig/serverConfig/buildConfig.gradle'

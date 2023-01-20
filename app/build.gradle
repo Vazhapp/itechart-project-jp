@@ -26,9 +26,15 @@ android {
     productFlavors {
         prod {
             dimension "environment"
+//            rootProject.ext.getServerConfig('release').each { key, val ->
+//                buildConfigField "String", key, val
+//            }
         }
         dev {
             dimension "environment"
+//            rootProject.ext.getServerConfig('dev').each { key, val ->
+//                buildConfigField "String", key, val
+//            }
         }
     }
 

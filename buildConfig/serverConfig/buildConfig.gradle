@@ -1,0 +1,12 @@
+ext.getServerConfig = { flavourName ->
+    def SERVER_CONFIGURATION_PROPERTIES = "buildConfig/serverConfig/$flavourName/server.properties"
+    def serverConfigProperties = Properties()
+
+    file(SERVER_CONFIGURATION_PROPERTIES).withInputStream {
+        serverConfigProperties.load(it)
+    }
+
+    return serverConfigProperties.stringPropertyNames().collect() { key ->
+        [key, serverConfigProperties[key]]
+    }
+}

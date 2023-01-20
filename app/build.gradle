@@ -26,12 +26,15 @@ android {
     productFlavors {
         prod {
             dimension "environment"
+            buildConfigField "String", "TEST_UURL", "\"https://search.example.release.com\""
+
 //            rootProject.ext.getServerConfig('release').each { key, val ->
 //                buildConfigField "String", key, val
 //            }
         }
         dev {
             dimension "environment"
+            buildConfigField "String", "TEST_URL", "\"https://search.example.dev.com\""
 //            rootProject.ext.getServerConfig('dev').each { key, val ->
 //                buildConfigField "String", key, val
 //            }

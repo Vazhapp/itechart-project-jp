@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">itechart</string>
+    <string name="error_generic">Some Error occurred, please try again later</string>
 </resources>

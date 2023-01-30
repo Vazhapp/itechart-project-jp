@@ -61,10 +61,10 @@ fun DefaultPreview() {
 
 @Composable
 fun PodcastList(
-    podcastsViewModel: PodcastsViewModel = viewModel(),
+   // podcastsViewModel: PodcastsViewModel = viewModel(),
 ) {
-    val podcastListSize = podcastsViewModel.data.collectAsState().value?.let {
-        it.podcasts?.size
-    }
-    Text(text = podcastListSize.toString(), fontSize = 40.sp, color = Color.Black)
+//    val podcastListSize = podcastsViewModel.data.collectAsState().value?.let {
+//        it.podcasts?.size
+//    }
+    Text(text = "20", fontSize = 40.sp, color = Color.Black)
 }

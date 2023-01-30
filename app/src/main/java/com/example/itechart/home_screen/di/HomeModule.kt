@@ -1,15 +1,14 @@
 package com.example.itechart.home_screen.di
 
-import com.example.itechart.common.Consts.BASE_URL
+import com.example.itechart.home_screen.data.repository.HomeRepositoryImpl
 import com.example.itechart.home_screen.data.source.remote.HomeServiceApi
-import com.squareup.moshi.Moshi
+import com.example.itechart.home_screen.domain.repository.HomeRepository
+import com.example.itechart.home_screen.domain.use_case.GetPodcastListUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -18,11 +17,16 @@ object HomeModule {
 
     @Provides
     @Singleton
-    fun provideHomeApi(okHttpClient: OkHttpClient, moshi: Moshi): HomeServiceApi =
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(HomeServiceApi::class.java)
+    fun provideHomeApi(retrofit: Retrofit): HomeServiceApi =
+        retrofit.create(HomeServiceApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideHomeRepo(homeServiceApi: HomeServiceApi): HomeRepository =
+        HomeRepositoryImpl(homeServiceApi)
+
+    @Provides
+    @Singleton
+    fun provideGetPodcastListUseCase(repository: HomeRepository): GetPodcastListUseCase =
+        GetPodcastListUseCase(repository)
 }

@@ -10,6 +10,7 @@ coroutine = "1.6.4"
 viewmodel-lifecycle = "2.5.1"
 room = "2.4.3"
 datastore = "1.0.0"
+compose-viewmodel = "2.4.0"
 
 [libraries]
 # libraries
@@ -30,6 +31,7 @@ hilt-compiler = "androidx.hilt:hilt-compiler:1.0.0"
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutine" }
 
+androidx-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewmodel"}
 androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel-lifecycle" }
 androidx-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "viewmodel-lifecycle" }
 androidx-lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "viewmodel-lifecycle" }

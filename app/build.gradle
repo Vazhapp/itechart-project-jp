@@ -22,6 +22,29 @@ android {
         }
     }
 
+    flavorDimensions "environment"
+    productFlavors {
+        prod {
+            dimension "environment"
+            rootProject.ext.getServerConfig('prod').each { key, val ->
+                buildConfigField "String", key, val
+            }
+        }
+        dev {
+            dimension "environment"
+            rootProject.ext.getServerConfig('dev').each { key, val ->
+                buildConfigField "String", key, val
+            }
+        }
+    }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if (names.contains("dev") && variant.buildType.name.endsWith('release')) {
+            setIgnore(true)
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -68,6 +91,7 @@ dependencies {
 
     implementation(libs.coil)
 
+    implementation(libs.androidx.viewmodel.compose)
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

@@ -38,6 +38,13 @@ android {
         }
     }
 
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if (names.contains("dev") && variant.buildType.name.endsWith('release')) {
+            setIgnore(true)
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

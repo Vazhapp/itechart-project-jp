@@ -21,7 +21,7 @@ class PodcastsViewModel @Inject constructor(
     private val getPodcastListUseCase: GetPodcastListUseCase,
 ) : ViewModel() {
 
-    private var _data = MutableStateFlow<PodcastList?>(null)
+    private val _data = MutableStateFlow<PodcastList?>(null)
     val data = _data.asStateFlow()
 
     private val _error = MutableSharedFlow<Int>()

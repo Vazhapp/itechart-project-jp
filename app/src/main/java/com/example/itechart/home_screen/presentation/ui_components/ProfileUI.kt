@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.itechart.R
+import com.example.itechart.ui.theme.LightGray
 
 @Preview
 @Composable
@@ -43,7 +44,7 @@ fun Profile() {
         ) {
             Text(
                 text = "Welcome Vazha!",
-                color = Color.LightGray,
+                color = LightGray,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(

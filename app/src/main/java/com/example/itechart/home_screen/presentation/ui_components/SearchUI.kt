@@ -26,7 +26,7 @@ fun Search() {
     ) {
         Box(
             modifier = Modifier
-                .width(50.dp)
+                .width(57.dp)
                 .height(70.dp)
                 .border(
                     width = 1.dp,
@@ -42,7 +42,7 @@ fun Search() {
         ) {
             Image(
                 modifier = Modifier
-                    .padding(top = 12.dp, end = 2.dp)
+                    .padding(top = 12.dp, end = 5.dp)
                     .size(44.dp)
                     .height(100.dp)
                     .padding(2.dp),

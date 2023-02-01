@@ -24,7 +24,7 @@ fun Profile() {
     Row(
         modifier = Modifier
             .wrapContentHeight()
-            .fillMaxWidth()
+            .wrapContentWidth()
             .padding(all = 12.dp)
     ) {
         Image(
@@ -36,7 +36,7 @@ fun Profile() {
         )
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .wrapContentWidth()
                     .height(60.dp)
                     .padding(start = 12.dp),
                 verticalArrangement = Arrangement.Center

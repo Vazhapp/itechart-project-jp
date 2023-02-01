@@ -34,24 +34,24 @@ fun Profile() {
                 .size(60.dp)
                 .clip(CircleShape)
         )
-            Column(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .height(60.dp)
-                    .padding(start = 12.dp),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Welcome Vazha!",
-                    color = Color.Gray,
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = stringResource(R.string.explore_podcasts),
-                    fontFamily = FontFamily(Font(R.font.main_font, FontWeight.Bold)),
-                    color = Color.Black,
-                    fontSize = 16.sp
-                )
-            }
+        Column(
+            modifier = Modifier
+                .wrapContentWidth()
+                .height(60.dp)
+                .padding(start = 12.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Welcome Vazha!",
+                color = Color.LightGray,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = stringResource(R.string.explore_podcasts),
+                fontFamily = FontFamily(Font(R.font.main_font, FontWeight.Bold)),
+                color = Color.White,
+                fontSize = 16.sp
+            )
         }
+    }
 }

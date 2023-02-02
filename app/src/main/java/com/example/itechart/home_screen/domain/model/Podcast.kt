@@ -6,8 +6,8 @@ data class Podcast(
     val publisher: String?,
     val image : String?,
     val thumbnail: String?,
-    val listennotes_url: String?,
-    val total_episodes: String?,
+    val listenNotesUrl: String?,
+    val totalEpisodes: String?,
     val description :String?,
     val type: String?,
 )

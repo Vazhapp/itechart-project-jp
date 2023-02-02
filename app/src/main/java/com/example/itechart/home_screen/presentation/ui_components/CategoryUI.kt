@@ -1,5 +1,6 @@
 package com.example.itechart.home_screen.presentation.ui_components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,20 +13,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.itechart.R
 import com.example.itechart.home_screen.domain.model.CategoryModel
+import com.example.itechart.ui.theme.DarkGray
 import com.example.itechart.ui.theme.LightBlue
 import com.example.itechart.ui.theme.Purple
 
 
 @Composable
-fun CategoryList(categories: List<CategoryModel>) {
-    Column(modifier = Modifier.wrapContentWidth().wrapContentHeight().padding(16.dp)) {
+fun Categories(categories: List<CategoryModel>) {
+    Column(
+        modifier = Modifier
+            .wrapContentWidth()
+            .wrapContentHeight()
+            .padding(16.dp)
+    ) {
         Text(
             text = stringResource(R.string.new_podcasts_categories_title),
             fontFamily = FontFamily(Font(R.font.main_font)),
@@ -66,5 +75,44 @@ fun CategoryItem(categoryModel: CategoryModel) {
             color = Color.White,
             fontFamily = FontFamily(Font(R.font.categories_font)),
         )
+    }
+}
+
+@Preview
+@Composable
+fun PodcastItem() {
+    Column(
+        modifier = Modifier
+            .wrapContentHeight()
+            .wrapContentWidth()
+            .padding(16.dp)
+            .background(Color.Black)
+    ) {
+        Image(
+            modifier = Modifier.size(180.dp).clip(RoundedCornerShape(20.dp)),
+            painter = painterResource(id = R.drawable.main_background),
+            contentDescription = "Empty"
+        )
+        Box(
+            modifier = Modifier
+                .wrapContentHeight()
+                .wrapContentWidth()
+                .padding(10.dp)
+        ) {
+            Column {
+                Text(
+                    text = "Dare We Say",
+                    fontFamily = FontFamily(Font(R.font.categories_font)),
+                    fontSize = 18.sp,
+                    color = Color.White
+                )
+                Text(
+                    text = "truth.media",
+                    fontFamily = FontFamily(Font(R.font.categories_font)),
+                    fontSize = 14.sp,
+                    color = DarkGray
+                )
+            }
+        }
     }
 }

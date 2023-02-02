@@ -9,7 +9,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.itechart.R
 import com.example.itechart.home_screen.domain.model.CategoryModel
-import com.example.itechart.home_screen.presentation.ui_components.CategoryList
+import com.example.itechart.home_screen.presentation.ui_components.Categories
 import com.example.itechart.home_screen.presentation.ui_components.Profile
 import com.example.itechart.home_screen.presentation.ui_components.Search
 
@@ -32,7 +32,7 @@ fun HomeScreen() {
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(top = 120.dp)) {
-            CategoryList(
+            Categories(
                 categories = generateDummyCategories()
             )
         }

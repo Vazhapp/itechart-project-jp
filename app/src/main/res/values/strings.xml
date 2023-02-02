@@ -2,4 +2,5 @@
     <string name="app_name">itechart</string>
     <string name="error_generic">Some Error occurred, please try again later</string>
     <string name="explore_podcasts">Explore Podcasts</string>
+    <string name="new_podcasts_categories_title">New Podcasts</string>
 </resources>

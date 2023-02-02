@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itechart.R
 import com.example.itechart.common.DataState
-import com.example.itechart.home_screen.domain.model.PodcastList
+import com.example.itechart.home_screen.domain.model.PagingData
 import com.example.itechart.home_screen.domain.use_case.GetPodcastListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,7 +21,7 @@ class PodcastsViewModel @Inject constructor(
     private val getPodcastListUseCase: GetPodcastListUseCase,
 ) : ViewModel() {
 
-    private val _data = MutableStateFlow<PodcastList?>(null)
+    private val _data = MutableStateFlow<PagingData?>(null)
     val data = _data.asStateFlow()
 
     private val _error = MutableSharedFlow<Int>()

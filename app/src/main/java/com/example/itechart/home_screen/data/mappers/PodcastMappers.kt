@@ -1,16 +1,16 @@
 package com.example.itechart.home_screen.data.mappers
 
 import com.example.itechart.home_screen.data.source.dto.PodcastDTO
-import com.example.itechart.home_screen.data.source.dto.PodcastListDTO
+import com.example.itechart.home_screen.data.source.dto.PodcastPagingDataDTO
 import com.example.itechart.home_screen.domain.model.Podcast
-import com.example.itechart.home_screen.domain.model.PagingData
+import com.example.itechart.home_screen.domain.model.PodcastPagingData
 
-fun PodcastListDTO.toDomainModel(): PagingData =
-    PagingData(
+fun PodcastPagingDataDTO.toDomainModel(): PodcastPagingData =
+    PodcastPagingData(
         id = id,
         name = name,
         parentId = parentId,
-        podcasts = podcasts,
+        podcasts = podcasts.toDomainModel(),
         hasNext = hasNext,
         hasPrevious = hasPrevious,
         listenNotesUrl = listenNotesUrl,
@@ -29,11 +29,11 @@ fun PodcastDTO.toDomainModel(): Podcast =
         type = type,
     )
 
-fun List<PodcastListDTO>.toDomainModel(): List<PagingData> {
-    val listOfPodcasts = listOf<PagingData>().toMutableList()
-   this.forEach {
-       listOfPodcasts += it.toDomainModel()
+fun List<PodcastDTO>.toDomainModel(): List<Podcast> {
+    val podcastList = mutableListOf<Podcast>()
+    this.forEach {
+        podcastList += it.toDomainModel()
     }
-    return listOfPodcasts
+    return podcastList
 }
 

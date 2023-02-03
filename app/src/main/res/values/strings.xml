@@ -3,4 +3,5 @@
     <string name="error_generic">Some Error occurred, please try again later</string>
     <string name="explore_podcasts">Explore Podcasts</string>
     <string name="new_podcasts_categories_title">New Podcasts</string>
+    <string name="new_noteworthy_categories_title"><![CDATA[New & Noteworthy]]></string>
 </resources>

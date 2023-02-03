@@ -11,12 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -53,6 +59,19 @@ fun Categories(categories: List<CategoryModel>, podcasts: List<Podcast>) {
             )
         }
     }
+    Text(
+        modifier = Modifier
+            .padding(
+                top = 36.dp,
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 10.dp
+            ),
+        text = stringResource(R.string.new_noteworthy_categories_title),
+        fontFamily = FontFamily(Font(R.font.main_font)),
+        color = Color.White,
+        fontSize = 24.sp
+    )
     LazyRow {
         items(
             podcasts
@@ -96,40 +115,46 @@ fun PodcastItem(
     val rememberImagePainter =
         rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(podcast.image.orEmpty()).build()
+                .data(podcast.image.orEmpty()).build(),
         )
     Column(
         modifier = Modifier
             .wrapContentHeight()
-            .wrapContentWidth()
+            .width(200.dp)
             .padding(16.dp)
-            .background(Color.Black)
     ) {
         Image(
             modifier = Modifier
                 .size(180.dp)
                 .clip(RoundedCornerShape(20.dp)),
             painter = rememberImagePainter,
-            contentDescription = "Empty"
+            contentDescription = "Empty",
+            contentScale = ContentScale.Crop
         )
         Box(
             modifier = Modifier
                 .wrapContentHeight()
                 .wrapContentWidth()
-                .padding(10.dp)
+                .padding(4.dp)
         ) {
             Column {
                 Text(
                     text = podcast.title.orEmpty(),
                     fontFamily = FontFamily(Font(R.font.categories_font)),
                     fontSize = 18.sp,
-                    color = Color.White
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Text(
+                    modifier = Modifier.padding(start = 4.dp),
                     text = podcast.publisher.orEmpty(),
                     fontFamily = FontFamily(Font(R.font.categories_font)),
                     fontSize = 14.sp,
-                    color = DarkGray
+                    color = DarkGray,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }

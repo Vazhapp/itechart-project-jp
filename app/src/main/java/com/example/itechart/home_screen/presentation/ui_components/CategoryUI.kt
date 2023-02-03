@@ -13,22 +13,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.itechart.R
 import com.example.itechart.home_screen.domain.model.CategoryModel
+import com.example.itechart.home_screen.domain.model.PodcastPagingData
+import com.example.itechart.home_screen.domain.model.Podcast
 import com.example.itechart.ui.theme.DarkGray
 import com.example.itechart.ui.theme.LightBlue
 import com.example.itechart.ui.theme.Purple
+import dagger.hilt.android.AndroidEntryPoint
 
 
 @Composable
-fun Categories(categories: List<CategoryModel>) {
+fun Categories(categories: List<CategoryModel>, podcasts: List<Podcast>) {
     Column(
         modifier = Modifier
             .wrapContentWidth()
@@ -47,6 +51,13 @@ fun Categories(categories: List<CategoryModel>) {
             CategoryItem(
                 categoryModel = category
             )
+        }
+    }
+    LazyRow {
+        items(
+            podcasts
+        ) { podcast ->
+            PodcastItem(podcast = podcast)
         }
     }
 }
@@ -78,9 +89,15 @@ fun CategoryItem(categoryModel: CategoryModel) {
     }
 }
 
-@Preview
 @Composable
-fun PodcastItem() {
+fun PodcastItem(
+    podcast: Podcast
+) {
+    val rememberImagePainter =
+        rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(podcast.image.orEmpty()).build()
+        )
     Column(
         modifier = Modifier
             .wrapContentHeight()
@@ -89,8 +106,10 @@ fun PodcastItem() {
             .background(Color.Black)
     ) {
         Image(
-            modifier = Modifier.size(180.dp).clip(RoundedCornerShape(20.dp)),
-            painter = painterResource(id = R.drawable.main_background),
+            modifier = Modifier
+                .size(180.dp)
+                .clip(RoundedCornerShape(20.dp)),
+            painter = rememberImagePainter,
             contentDescription = "Empty"
         )
         Box(
@@ -101,13 +120,13 @@ fun PodcastItem() {
         ) {
             Column {
                 Text(
-                    text = "Dare We Say",
+                    text = podcast.title.orEmpty(),
                     fontFamily = FontFamily(Font(R.font.categories_font)),
                     fontSize = 18.sp,
                     color = Color.White
                 )
                 Text(
-                    text = "truth.media",
+                    text = podcast.publisher.orEmpty(),
                     fontFamily = FontFamily(Font(R.font.categories_font)),
                     fontSize = 14.sp,
                     color = DarkGray

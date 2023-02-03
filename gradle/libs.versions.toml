@@ -20,6 +20,7 @@ junit = "4.13.2"
 junit-android = "1.1.5"
 espresso = "3.5.1"
 compose-navigation = "2.5.3"
+hilt-navigation = "1.0.0"
 
 [libraries]
 # libraries
@@ -57,6 +58,7 @@ hilt-compiler = "androidx.hilt:hilt-compiler:1.0.0"
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutine" }
 
+androidx-compose-navigation-hilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation"}
 androidx-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewmodel"}
 androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel-lifecycle" }
 androidx-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "viewmodel-lifecycle" }
@@ -93,7 +95,8 @@ androidx = [
     "androidx-activity",
     "androidx-compose",
     "androidx-preview",
-    "androidx-material"
+    "androidx-material",
+    "androidx-compose-navigation-hilt"
 ]
 
 test = [

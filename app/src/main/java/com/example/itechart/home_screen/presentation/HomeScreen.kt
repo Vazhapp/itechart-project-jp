@@ -3,10 +3,12 @@ package com.example.itechart.home_screen.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.itechart.R
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.presentation.ui_components.Categories
@@ -15,6 +17,7 @@ import com.example.itechart.home_screen.presentation.ui_components.Search
 
 @Composable
 fun HomeScreen() {
+    val podcastsViewModel: PodcastsViewModel = hiltViewModel()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -32,9 +35,13 @@ fun HomeScreen() {
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(top = 120.dp)) {
-            Categories(
-                categories = generateDummyCategories()
-            )
+            val podcastList = podcastsViewModel.data.collectAsState()
+            podcastList.value?.podcasts.let {
+                Categories(
+                    categories = generateDummyCategories(),
+                    podcasts = it.orEmpty()
+                )
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ import com.example.itechart.common.DataState
 import com.example.itechart.common.SuccessMetaData
 import com.example.itechart.home_screen.data.mappers.toDomainModel
 import com.example.itechart.home_screen.data.source.remote.HomeServiceApi
-import com.example.itechart.home_screen.domain.model.PagingData
+import com.example.itechart.home_screen.domain.model.PodcastPagingData
 import com.example.itechart.home_screen.domain.repository.HomeRepository
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ class HomeRepositoryImpl @Inject constructor(
         page: Int,
         region: String,
         safeMode: Int
-    ): DataState<PagingData> {
+    ): DataState<PodcastPagingData> {
         return DataState.Success(
             SuccessMetaData(),
             homeServiceApi.getPopularPodcasts(genreId, page, region, safeMode).body()?.toDomainModel()

@@ -1,10 +1,10 @@
 package com.example.itechart.home_screen.data.source.dto
 
-data class PodcastListDTO(
+data class PodcastPagingDataDTO(
     val id : Int?,
     val name: String?,
     val parentId: Int?,
-    val podcasts : List<PodcastDTO>?,
+    val podcasts : List<PodcastDTO>,
     val total : Int?,
     val hasNext : Boolean?,
     val hasPrevious : Boolean?,

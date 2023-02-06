@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -20,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,12 +29,8 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.itechart.R
 import com.example.itechart.home_screen.domain.model.CategoryModel
-import com.example.itechart.home_screen.domain.model.PodcastPagingData
 import com.example.itechart.home_screen.domain.model.Podcast
-import com.example.itechart.ui.theme.DarkGray
-import com.example.itechart.ui.theme.LightBlue
-import com.example.itechart.ui.theme.Purple
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.itechart.ui.theme.*
 
 
 @Composable
@@ -157,6 +153,50 @@ fun PodcastItem(
                     overflow = TextOverflow.Ellipsis
                 )
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun EpisodeItem() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.main_background),
+            contentDescription = "Empty",
+            modifier = Modifier
+                .size(120.dp)
+                .padding(10.dp)
+                .clip(RoundedCornerShape(30.dp)),
+            contentScale = ContentScale.Crop
+        )
+        Column(
+            Modifier
+                .height(120.dp)
+                .wrapContentWidth()
+                .align(Alignment.Bottom)
+        ) {
+            Text(
+                modifier = Modifier.padding(top = 26.dp),
+                text = "Vazha Kentchiashvili's speak",
+                fontSize = 18.sp,
+                fontFamily = FontFamily(Font(R.font.categories_font)),
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                modifier = Modifier.padding(top = 28.dp),
+                text = "16 August, 2023",
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.categories_font)),
+                color = Gray,
+            )
         }
     }
 }

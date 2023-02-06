@@ -3,6 +3,7 @@ package com.example.itechart.home_screen.presentation.ui_components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,7 +23,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -30,7 +30,10 @@ import coil.request.ImageRequest
 import com.example.itechart.R
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.domain.model.Podcast
-import com.example.itechart.ui.theme.*
+import com.example.itechart.ui.theme.DarkGray
+import com.example.itechart.ui.theme.Gray
+import com.example.itechart.ui.theme.LightBlue
+import com.example.itechart.ui.theme.Purple
 
 
 @Composable
@@ -73,6 +76,26 @@ fun Categories(categories: List<CategoryModel>, podcasts: List<Podcast>) {
             podcasts
         ) { podcast ->
             PodcastItem(podcast = podcast)
+        }
+    }
+    Text(
+        modifier = Modifier
+            .padding(
+                top = 36.dp,
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 10.dp
+            ),
+        text = stringResource(R.string.top_episodes_categories_title),
+        fontFamily = FontFamily(Font(R.font.main_font)),
+        color = Color.White,
+        fontSize = 24.sp
+    )
+    LazyColumn {
+        items(
+            podcasts
+        ) { podcast ->
+            EpisodeItem(podcast = podcast)
         }
     }
 }
@@ -161,14 +184,18 @@ fun PodcastItem(
 fun EpisodeItem(
     podcast: Podcast
 ) {
+    val rememberImagePainter =
+        rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(podcast.image.orEmpty()).build(),
+        )
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .background(Color.Blue)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.man),
+            painter = rememberImagePainter,
             contentDescription = "Empty",
             modifier = Modifier
                 .size(120.dp)

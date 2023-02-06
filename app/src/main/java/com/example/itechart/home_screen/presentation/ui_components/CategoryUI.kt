@@ -157,16 +157,18 @@ fun PodcastItem(
     }
 }
 
-@Preview
 @Composable
-fun EpisodeItem() {
+fun EpisodeItem(
+    podcast: Podcast
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .background(Color.Blue)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.main_background),
+            painter = painterResource(id = R.drawable.man),
             contentDescription = "Empty",
             modifier = Modifier
                 .size(120.dp)
@@ -176,27 +178,36 @@ fun EpisodeItem() {
         )
         Column(
             Modifier
-                .height(120.dp)
-                .wrapContentWidth()
+                .height(130.dp)
+                .width(200.dp)
                 .align(Alignment.Bottom)
         ) {
             Text(
-                modifier = Modifier.padding(top = 26.dp),
-                text = "Vazha Kentchiashvili's speak",
+                modifier = Modifier.padding(top = 16.dp),
+                text = podcast.title.orEmpty(),
                 fontSize = 18.sp,
                 fontFamily = FontFamily(Font(R.font.categories_font)),
-                color = Color.Black,
+                color = Color.White,
                 fontWeight = FontWeight.Bold,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                modifier = Modifier.padding(top = 28.dp),
-                text = "16 August, 2023",
+                modifier = Modifier.padding(top = 18.dp),
+                text = podcast.totalEpisodes.toString(),
                 fontSize = 14.sp,
                 fontFamily = FontFamily(Font(R.font.categories_font)),
                 color = Gray,
             )
         }
+        Image(
+            painter = painterResource(id = R.drawable.play_icon),
+            contentDescription = "Play or pause podcast",
+            modifier = Modifier
+                .height(130.dp)
+                .size(36.dp)
+                .padding(start = 8.dp),
+            alignment = Alignment.Center
+        )
     }
 }

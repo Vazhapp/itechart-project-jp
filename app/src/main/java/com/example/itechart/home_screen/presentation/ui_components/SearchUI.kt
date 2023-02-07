@@ -32,10 +32,7 @@ fun Search() {
                     width = 1.dp,
                     brush = Brush.verticalGradient(colors = listOf(Color.LightGray, Color.Gray)),
                     shape = RoundedCornerShape(
-                        topStart = 40.dp,
-                        topEnd = 40.dp,
-                        bottomStart = 40.dp,
-                        bottomEnd = 40.dp
+                        40.dp
                     )
                 ),
             contentAlignment = Alignment.TopEnd

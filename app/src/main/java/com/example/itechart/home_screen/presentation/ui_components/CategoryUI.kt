@@ -51,7 +51,7 @@ fun Categories(categories: List<CategoryModel>, podcasts: List<Podcast>) {
             fontSize = 24.sp
         )
     }
-    LazyRow {
+    LazyRow(modifier = Modifier.height(100.dp)) {
         items(categories) { category ->
             CategoryItem(
                 categoryModel = category
@@ -71,7 +71,7 @@ fun Categories(categories: List<CategoryModel>, podcasts: List<Podcast>) {
         color = Color.White,
         fontSize = 24.sp
     )
-    LazyRow {
+    LazyRow(modifier = Modifier.height(200.dp)) {
         items(
             podcasts
         ) { podcast ->
@@ -91,7 +91,7 @@ fun Categories(categories: List<CategoryModel>, podcasts: List<Podcast>) {
         color = Color.White,
         fontSize = 24.sp
     )
-    LazyColumn {
+    LazyColumn(modifier = Modifier.height(300.dp).padding(bottom = 16.dp)) {
         items(
             podcasts
         ) { podcast ->

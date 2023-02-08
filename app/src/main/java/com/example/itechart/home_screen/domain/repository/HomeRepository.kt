@@ -1,7 +1,7 @@
 package com.example.itechart.home_screen.domain.repository
 
 import com.example.itechart.common.DataState
-import com.example.itechart.home_screen.domain.model.PagingData
+import com.example.itechart.home_screen.domain.model.PodcastPagingData
 
 interface HomeRepository {
 
@@ -10,5 +10,5 @@ interface HomeRepository {
         page: Int,
         region: String,
         safeMode: Int
-    ): DataState<PagingData>
+    ): DataState<PodcastPagingData>
 }

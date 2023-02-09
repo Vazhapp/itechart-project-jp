@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.itechart.R
+import com.example.itechart.common.ui.shimmerEffect
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.domain.model.Podcast
 import com.example.itechart.ui.theme.DarkGray
@@ -71,7 +72,7 @@ fun Categories(categories: List<CategoryModel>, podcasts: List<Podcast>) {
         color = Color.White,
         fontSize = 24.sp
     )
-    LazyRow(modifier = Modifier.height(200.dp)) {
+    LazyRow(modifier = Modifier.height(230.dp)) {
         items(
             podcasts
         ) { podcast ->
@@ -140,11 +141,11 @@ fun PodcastItem(
         modifier = Modifier
             .wrapContentHeight()
             .width(200.dp)
-            .padding(16.dp)
+            .padding(12.dp)
     ) {
         Image(
             modifier = Modifier
-                .size(180.dp)
+                .size(150.dp)
                 .clip(RoundedCornerShape(20.dp)),
             painter = rememberImagePainter,
             contentDescription = "Empty",

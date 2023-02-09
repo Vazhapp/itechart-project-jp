@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.itechart.R
 
+private const val STANDARD_LOADING_ITEMS_COUNT = 3
+
 @Composable
 fun ShimmerListItem(
     isLoading: Boolean,
@@ -34,114 +36,140 @@ fun ShimmerListItem(
 ) {
     if (isLoading) {
         Column(modifier = Modifier.fillMaxSize()) {
-            Text(
-                modifier = modifier.padding(start = 4.dp),
-                text = stringResource(R.string.new_podcasts_categories_title),
-                fontFamily = FontFamily(Font(R.font.main_font)),
-                color = Color.White,
-                fontSize = 24.sp
+            CategoryLoadingItem(modifier = modifier, itemsCount = STANDARD_LOADING_ITEMS_COUNT)
+            NewAndNoteworthyLoadingItem(modifier = modifier, itemsCount = STANDARD_LOADING_ITEMS_COUNT)
+            LoadingTopEpisodesItem(modifier = modifier, itemsCount = STANDARD_LOADING_ITEMS_COUNT)
+        }
+    } else {
+        contentAfterLoading()
+    }
+}
+
+@Composable
+fun CategoryLoadingItem(
+    modifier: Modifier,
+    itemsCount: Int
+) {
+    Text(
+        modifier = modifier.padding(start = 4.dp),
+        text = stringResource(R.string.new_podcasts_categories_title),
+        fontFamily = FontFamily(Font(R.font.main_font)),
+        color = Color.White,
+        fontSize = 24.sp
+    )
+    LazyRow(modifier = modifier.height(150.dp)) {
+        items(itemsCount) {
+            Box(
+                modifier = modifier
+                    .height(98.dp)
+                    .width(165.dp)
+                    .padding(start = 10.dp, top = 10.dp)
+                    .clip(RoundedCornerShape(22.dp))
+                    .shimmerEffect()
             )
-            LazyRow(modifier = Modifier.height(150.dp)) {
-                items(3) {
+        }
+    }
+}
+
+@Composable
+fun NewAndNoteworthyLoadingItem(
+    modifier: Modifier,
+    itemsCount: Int
+) {
+    Text(
+        modifier = modifier
+            .padding(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 10.dp
+            ),
+        text = stringResource(R.string.new_noteworthy_categories_title),
+        fontFamily = FontFamily(Font(R.font.main_font)),
+        color = Color.White,
+        fontSize = 24.sp
+    )
+    LazyRow(modifier = modifier.wrapContentHeight(), contentPadding = PaddingValues(5.dp)) {
+        items(itemsCount) {
+            Column(modifier = Modifier.size(200.dp)) {
+
+                Box(
+                    modifier = modifier
+                        .size(150.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .shimmerEffect()
+                )
+                Spacer(modifier = modifier.height(4.dp))
+                Box(
+                    modifier = modifier
+                        .fillMaxWidth(0.4f)
+                        .height(14.dp)
+                        .padding(start = 4.dp)
+                        .shimmerEffect()
+                )
+                Spacer(modifier = modifier.height(4.dp))
+                Box(
+                    modifier = modifier
+                        .fillMaxWidth(0.2f)
+                        .height(14.dp)
+                        .padding(start = 4.dp)
+                        .shimmerEffect()
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun LoadingTopEpisodesItem(
+    modifier: Modifier,
+    itemsCount: Int
+) {
+    Text(
+        modifier = modifier
+            .padding(
+                top = 16.dp,
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 10.dp
+            ),
+        text = stringResource(R.string.top_episodes_categories_title),
+        fontFamily = FontFamily(Font(R.font.main_font)),
+        color = Color.White,
+        fontSize = 24.sp
+    )
+    LazyColumn(modifier = modifier.height(300.dp), contentPadding = PaddingValues(6.dp)) {
+        items(itemsCount) {
+            Row(
+                modifier = modifier
+                    .wrapContentHeight()
+                    .padding(6.dp)
+            ) {
+                Box(
+                    modifier = modifier
+                        .size(100.dp)
+                        .clip(RoundedCornerShape(30.dp))
+                        .shimmerEffect()
+                )
+                Spacer(modifier = modifier.width(16.dp))
+                Column(
+                    modifier = modifier.weight(1f)
+                ) {
                     Box(
-                        modifier = Modifier
-                            .height(97.dp)
-                            .width(165.dp)
-                            .padding(start = 10.dp, top = 10.dp)
-                            .clip(RoundedCornerShape(22.dp))
+                        modifier = modifier
+                            .fillMaxWidth(0.6f)
+                            .height(14.dp)
+                            .shimmerEffect()
+                    )
+                    Spacer(modifier = modifier.height(16.dp))
+                    Box(
+                        modifier = modifier
+                            .fillMaxWidth(0.4f)
+                            .height(14.dp)
                             .shimmerEffect()
                     )
                 }
             }
-            Text(
-                modifier = Modifier
-                    .padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 10.dp
-                    ),
-                text = stringResource(R.string.new_noteworthy_categories_title),
-                fontFamily = FontFamily(Font(R.font.main_font)),
-                color = Color.White,
-                fontSize = 24.sp
-            )
-            LazyRow(modifier = Modifier.wrapContentHeight(), contentPadding = PaddingValues(5.dp)) {
-                items(3) {
-                    Column(modifier = Modifier.size(200.dp)) {
-
-                        Box(
-                            modifier = Modifier
-                                .size(150.dp)
-                                .clip(RoundedCornerShape(20.dp))
-                                .shimmerEffect()
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth(0.4f)
-                                .height(14.dp)
-                                .padding(start = 4.dp)
-                                .shimmerEffect()
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth(0.2f)
-                                .height(14.dp)
-                                .padding(start = 4.dp)
-                                .shimmerEffect()
-                        )
-                    }
-                }
-            }
-            Text(
-                modifier = Modifier
-                    .padding(
-                        top = 16.dp,
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 10.dp
-                    ),
-                text = stringResource(R.string.top_episodes_categories_title),
-                fontFamily = FontFamily(Font(R.font.main_font)),
-                color = Color.White,
-                fontSize = 24.sp
-            )
-            LazyColumn(modifier = Modifier.height(300.dp), contentPadding = PaddingValues(6.dp)) {
-                items(3) {
-                    Row(modifier = Modifier.wrapContentHeight().padding(6.dp)) {
-                        Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .clip(RoundedCornerShape(30.dp))
-                                .shimmerEffect()
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Column(
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth(0.6f)
-                                    .height(14.dp)
-                                    .shimmerEffect()
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth(0.4f)
-                                    .height(14.dp)
-                                    .shimmerEffect()
-                            )
-                        }
-                    }
-                }
-            }
         }
-
-
-    } else {
-          contentAfterLoading()
     }
 }
 

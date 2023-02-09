@@ -27,6 +27,9 @@ class PodcastsViewModel @Inject constructor(
     private val _error = MutableSharedFlow<Int>()
     val error = _error.asSharedFlow()
 
+    private val _loading = MutableStateFlow(true)
+    val loading = _loading.asStateFlow()
+
     init {
         getPodcastList()
     }
@@ -34,11 +37,17 @@ class PodcastsViewModel @Inject constructor(
      private fun getPodcastList() {
         viewModelScope.launch(ioDispatcher) {
             when(val result = getPodcastListUseCase()) {
-                is DataState.Error -> _error.emit(R.string.error_generic)
+                is DataState.Error ->  {
+                    _error.emit(R.string.error_generic)
+                    _loading.emit(false)
+                }
                 is DataState.Success -> result.payload?.apply {
                     _data.emit(this)
+                    _loading.emit(false)
                 }
-                else -> { }
+                is DataState.Loading -> {
+                    _loading.emit(true)
+                }
             }
         }
     }

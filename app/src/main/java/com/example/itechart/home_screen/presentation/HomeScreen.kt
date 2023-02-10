@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.itechart.R
 import com.example.itechart.common.ui.ShimmerListItem
+import com.example.itechart.common.ui.rememberWindowInfo
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.presentation.ui_components.Categories
 import com.example.itechart.home_screen.presentation.ui_components.Profile
@@ -20,6 +21,7 @@ import com.example.itechart.home_screen.presentation.ui_components.Search
 @Composable
 fun HomeScreen() {
     val podcastsViewModel: PodcastsViewModel = hiltViewModel()
+    val rememberWindowInfo = rememberWindowInfo()
 
     Image(
         modifier = Modifier.fillMaxSize(),
@@ -44,7 +46,8 @@ fun HomeScreen() {
                     podcastList.value?.podcasts.let {
                         Categories(
                             categories = generateDummyCategories(),
-                            podcasts = it.orEmpty()
+                            podcasts = it.orEmpty(),
+                            windowType = rememberWindowInfo.screenWidthInfo
                         )
                     }
                 },

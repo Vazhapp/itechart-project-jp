@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RememberWindowInfo(): WindowInfo {
+fun rememberWindowInfo(): WindowInfo {
     val configuration = LocalConfiguration.current
     return WindowInfo(
         screenWidthInfo = when {

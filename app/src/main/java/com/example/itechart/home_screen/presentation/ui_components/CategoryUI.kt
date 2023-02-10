@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.itechart.R
+import com.example.itechart.common.ui.WindowInfo
 import com.example.itechart.common.ui.shimmerEffect
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.domain.model.Podcast
@@ -38,67 +39,75 @@ import com.example.itechart.ui.theme.Purple
 
 
 @Composable
-fun Categories(categories: List<CategoryModel>, podcasts: List<Podcast>) {
-    Column(
-        modifier = Modifier
-            .wrapContentWidth()
-            .wrapContentHeight()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.new_podcasts_categories_title),
-            fontFamily = FontFamily(Font(R.font.main_font)),
-            color = Color.White,
-            fontSize = 24.sp
-        )
-    }
-    LazyRow(modifier = Modifier.height(100.dp)) {
-        items(categories) { category ->
-            CategoryItem(
-                categoryModel = category
+fun Categories(categories: List<CategoryModel>, podcasts: List<Podcast>, windowType: WindowInfo.WindowType) {
+
+    when(windowType) {
+        WindowInfo.WindowType.Compact -> {
+            Column(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.new_podcasts_categories_title),
+                    fontFamily = FontFamily(Font(R.font.main_font)),
+                    color = Color.White,
+                    fontSize = 24.sp
+                )
+            }
+            LazyRow(modifier = Modifier.height(100.dp)) {
+                items(categories) { category ->
+                    CategoryItem(
+                        categoryModel = category
+                    )
+                }
+            }
+            Text(
+                modifier = Modifier
+                    .padding(
+                        top = 36.dp,
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 10.dp
+                    ),
+                text = stringResource(R.string.new_noteworthy_categories_title),
+                fontFamily = FontFamily(Font(R.font.main_font)),
+                color = Color.White,
+                fontSize = 24.sp
             )
+            LazyRow(modifier = Modifier.height(230.dp)) {
+                items(
+                    podcasts
+                ) { podcast ->
+                    PodcastItem(podcast = podcast)
+                }
+            }
+            Text(
+                modifier = Modifier
+                    .padding(
+                        top = 36.dp,
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 10.dp
+                    ),
+                text = stringResource(R.string.top_episodes_categories_title),
+                fontFamily = FontFamily(Font(R.font.main_font)),
+                color = Color.White,
+                fontSize = 24.sp
+            )
+            LazyColumn(modifier = Modifier.height(300.dp).padding(bottom = 16.dp)) {
+                items(
+                    podcasts
+                ) { podcast ->
+                    EpisodeItem(podcast = podcast)
+                }
+            }
         }
+        WindowInfo.WindowType.Expanded -> TODO()
+        WindowInfo.WindowType.Medium -> TODO()
     }
-    Text(
-        modifier = Modifier
-            .padding(
-                top = 36.dp,
-                start = 16.dp,
-                end = 16.dp,
-                bottom = 10.dp
-            ),
-        text = stringResource(R.string.new_noteworthy_categories_title),
-        fontFamily = FontFamily(Font(R.font.main_font)),
-        color = Color.White,
-        fontSize = 24.sp
-    )
-    LazyRow(modifier = Modifier.height(230.dp)) {
-        items(
-            podcasts
-        ) { podcast ->
-            PodcastItem(podcast = podcast)
-        }
-    }
-    Text(
-        modifier = Modifier
-            .padding(
-                top = 36.dp,
-                start = 16.dp,
-                end = 16.dp,
-                bottom = 10.dp
-            ),
-        text = stringResource(R.string.top_episodes_categories_title),
-        fontFamily = FontFamily(Font(R.font.main_font)),
-        color = Color.White,
-        fontSize = 24.sp
-    )
-    LazyColumn(modifier = Modifier.height(300.dp).padding(bottom = 16.dp)) {
-        items(
-            podcasts
-        ) { podcast ->
-            EpisodeItem(podcast = podcast)
-        }
-    }
+
 }
 
 @Composable

@@ -253,27 +253,27 @@ fun EpisodeItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
+                    .wrapContentHeight(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
                     painter = rememberImagePainter,
                     contentDescription = "Empty",
                     modifier = Modifier
-                        .size(120.dp)
+                        .size(180.dp)
                         .padding(10.dp)
                         .clip(RoundedCornerShape(30.dp)),
                     contentScale = ContentScale.Crop
                 )
                 Column(
                     Modifier
-                        .height(130.dp)
-                        .width(200.dp)
-                        .align(Alignment.Bottom)
+                        .height(200.dp)
+                        .fillMaxWidth(0.7f),
                 ) {
                     Text(
-                        modifier = Modifier.padding(top = 16.dp),
+                        modifier = Modifier.padding(top = 36.dp),
                         text = podcast.title.orEmpty(),
-                        fontSize = 18.sp,
+                        fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.categories_font)),
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
@@ -281,20 +281,22 @@ fun EpisodeItem(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        modifier = Modifier.padding(top = 18.dp),
-                        text = podcast.totalEpisodes.toString(),
-                        fontSize = 14.sp,
+                        modifier = Modifier.padding(top = 38.dp),
+                        text = podcast.publisher.orEmpty(),
+                        fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.categories_font)),
                         color = Gray,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
                 Image(
                     painter = painterResource(id = R.drawable.play_icon),
                     contentDescription = "Play or pause podcast",
                     modifier = Modifier
-                        .height(130.dp)
-                        .size(36.dp)
-                        .padding(start = 8.dp),
+                        .height(180.dp)
+                        .size(60.dp)
+                        .padding(start = 16.dp, top = 10.dp),
                     alignment = Alignment.Center
                 )
             }
@@ -317,11 +319,11 @@ fun EpisodeItem(
                 Column(
                     Modifier
                         .height(200.dp)
-                        .width(300.dp)
+                        .fillMaxWidth(0.7f)
                         .align(Alignment.Bottom)
                 ) {
                     Text(
-                        modifier = Modifier.padding(top = 16.dp),
+                        modifier = Modifier.padding(top = 26.dp),
                         text = podcast.title.orEmpty(),
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.categories_font)),
@@ -336,14 +338,16 @@ fun EpisodeItem(
                         fontSize = 18.sp,
                         fontFamily = FontFamily(Font(R.font.categories_font)),
                         color = Gray,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
                 Image(
                     painter = painterResource(id = R.drawable.play_icon),
                     contentDescription = "Play or pause podcast",
                     modifier = Modifier
-                        .height(130.dp)
-                        .size(66.dp)
+                        .height(180.dp)
+                        .size(62.dp)
                         .padding(start = 26.dp, top = 10.dp),
                     alignment = Alignment.Center
                 )

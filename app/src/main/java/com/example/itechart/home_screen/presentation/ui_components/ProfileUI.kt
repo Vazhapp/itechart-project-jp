@@ -45,6 +45,7 @@ fun Profile() {
             Text(
                 text = "Welcome Vazha!",
                 color = LightGray,
+                fontFamily = FontFamily(Font(R.font.categories_font))
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(

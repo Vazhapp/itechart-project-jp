@@ -1,6 +1,7 @@
 package com.example.itechart.home_screen.presentation.ui_components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,11 +17,17 @@ import com.example.itechart.R
 
 @Preview
 @Composable
-fun Search() {
+fun ExpandableSearchView() {
+
+}
+@Preview
+@Composable
+fun CollapsedSearchView() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .background(Color.Green)
             .padding(12.dp),
         horizontalArrangement = Arrangement.End,
     ) {

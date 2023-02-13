@@ -15,8 +15,8 @@ import com.example.itechart.common.ui.ShimmerListItem
 import com.example.itechart.common.ui.rememberWindowInfo
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.presentation.ui_components.Categories
+import com.example.itechart.home_screen.presentation.ui_components.ExpandableSearchView
 import com.example.itechart.home_screen.presentation.ui_components.Profile
-import com.example.itechart.home_screen.presentation.ui_components.Search
 
 @Composable
 fun HomeScreen() {
@@ -37,7 +37,7 @@ fun HomeScreen() {
         item {
             Row(modifier = Modifier.wrapContentWidth()) {
                 Profile()
-                Search()
+                ExpandableSearchView()
             }
             ShimmerListItem(
                 isLoading = podcastsViewModel.loading.collectAsState().value,

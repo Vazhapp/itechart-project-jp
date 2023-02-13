@@ -1,11 +1,8 @@
 package com.example.itechart.home_screen.presentation
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -14,6 +11,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.itechart.R
+import com.example.itechart.common.ui.ShimmerListItem
+import com.example.itechart.common.ui.rememberWindowInfo
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.presentation.ui_components.Categories
 import com.example.itechart.home_screen.presentation.ui_components.Profile
@@ -22,6 +21,7 @@ import com.example.itechart.home_screen.presentation.ui_components.Search
 @Composable
 fun HomeScreen() {
     val podcastsViewModel: PodcastsViewModel = hiltViewModel()
+    val rememberWindowInfo = rememberWindowInfo()
 
     Image(
         modifier = Modifier.fillMaxSize(),
@@ -39,13 +39,22 @@ fun HomeScreen() {
                 Profile()
                 Search()
             }
-            val podcastList = podcastsViewModel.data.collectAsState()
-            podcastList.value?.podcasts.let {
-                Categories(
-                    categories = generateDummyCategories(),
-                    podcasts = it.orEmpty()
-                )
-            }
+            ShimmerListItem(
+                isLoading = podcastsViewModel.loading.collectAsState().value,
+                contentAfterLoading = {
+                    val podcastList = podcastsViewModel.data.collectAsState()
+                    podcastList.value?.podcasts.let {
+                        Categories(
+                            categories = generateDummyCategories(),
+                            podcasts = it.orEmpty(),
+                            windowType = rememberWindowInfo.screenWidthInfo
+                        )
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
         }
     }
 }

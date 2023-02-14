@@ -63,7 +63,6 @@ fun CollapsedSearchView(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            // .background(Color.Green)
             .padding(12.dp),
         horizontalArrangement = Arrangement.End,
     ) {
@@ -86,7 +85,7 @@ fun CollapsedSearchView(
             contentAlignment = Alignment.TopEnd
         ) {
             IconButton(onClick = { onExpandedChanged(true) }) {
-                SearchIcon(iconTint = Color.White)// Icon(painter = painterResource(id = R.drawable.search), contentDescription = "emt")
+                SearchIcon(iconTint = Color.White)
             }
         }
     }

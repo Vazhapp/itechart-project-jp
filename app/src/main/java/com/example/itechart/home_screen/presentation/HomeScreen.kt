@@ -1,11 +1,13 @@
 package com.example.itechart.home_screen.presentation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -15,16 +17,19 @@ import com.example.itechart.common.ui.ShimmerListItem
 import com.example.itechart.common.ui.rememberWindowInfo
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.presentation.ui_components.Categories
+import com.example.itechart.home_screen.presentation.ui_components.ExpandableSearchView
 import com.example.itechart.home_screen.presentation.ui_components.Profile
-import com.example.itechart.home_screen.presentation.ui_components.Search
 
 @Composable
 fun HomeScreen() {
     val podcastsViewModel: PodcastsViewModel = hiltViewModel()
     val rememberWindowInfo = rememberWindowInfo()
+    var collapseSearchBarState by remember { mutableStateOf(false) }
 
     Image(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .blur(radius = 20.dp),
         painter = painterResource(id = R.drawable.main_background),
         contentDescription = "Main background",
         contentScale = ContentScale.FillBounds
@@ -33,11 +38,23 @@ fun HomeScreen() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
+            .clickable {
+                collapseSearchBarState = true
+            },
     ) {
         item {
             Row(modifier = Modifier.wrapContentWidth()) {
                 Profile()
-                Search()
+                ExpandableSearchView(
+                    "",
+                    {},
+                    {},
+                    Modifier,
+                    expandedInitially = false,
+                    Color.White,
+                    collapseSearchBar = collapseSearchBarState
+                )
+                collapseSearchBarState = false
             }
             ShimmerListItem(
                 isLoading = podcastsViewModel.loading.collectAsState().value,

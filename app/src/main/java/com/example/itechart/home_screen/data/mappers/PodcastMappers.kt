@@ -1,19 +1,19 @@
 package com.example.itechart.home_screen.data.mappers
 
 import com.example.itechart.home_screen.data.source.dto.PodcastDTO
-import com.example.itechart.home_screen.data.source.dto.PodcastListDTO
+import com.example.itechart.home_screen.data.source.dto.PodcastPagingDataDTO
 import com.example.itechart.home_screen.domain.model.Podcast
-import com.example.itechart.home_screen.domain.model.PodcastList
+import com.example.itechart.home_screen.domain.model.PodcastPagingData
 
-fun PodcastListDTO.toDomainModel(): PodcastList =
-    PodcastList(
+fun PodcastPagingDataDTO.toDomainModel(): PodcastPagingData =
+    PodcastPagingData(
         id = id,
         name = name,
-        parent_id = parent_id,
-        podcasts = podcasts,
-        has_next = has_next,
-        has_previous = has_previous,
-        listennotes_url = listennotes_url,
+        parentId = parentId,
+        podcasts = podcasts.toDomainModel(),
+        hasNext = hasNext,
+        hasPrevious = hasPrevious,
+        listenNotesUrl = listenNotesUrl,
     )
 
 fun PodcastDTO.toDomainModel(): Podcast =
@@ -23,17 +23,17 @@ fun PodcastDTO.toDomainModel(): Podcast =
         publisher = publisher,
         image = image,
         thumbnail = thumbnail,
-        listennotes_url = listennotes_url,
-        total_episodes = total_episodes,
+        listenNotesUrl = listenNotesUrl,
+        totalEpisodes = totalEpisodes,
         description = description,
         type = type,
     )
 
-fun List<PodcastListDTO>.toDomainModel(): List<PodcastList> {
-    val listOfPodcasts = listOf<PodcastList>().toMutableList()
-   this.forEach {
-       listOfPodcasts += it.toDomainModel()
+fun List<PodcastDTO>.toDomainModel(): List<Podcast> {
+    val podcastList = mutableListOf<Podcast>()
+    this.forEach {
+        podcastList += it.toDomainModel()
     }
-    return listOfPodcasts
+    return podcastList
 }
 

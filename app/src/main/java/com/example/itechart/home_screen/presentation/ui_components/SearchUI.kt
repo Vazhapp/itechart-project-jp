@@ -2,7 +2,6 @@ package com.example.itechart.home_screen.presentation.ui_components
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -22,7 +22,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.itechart.R
 import com.example.itechart.ui.theme.DarkGray
@@ -34,7 +33,8 @@ fun ExpandableSearchView(
     onSearchDisplayClosed: () -> Unit,
     modifier: Modifier = Modifier,
     expandedInitially: Boolean = false,
-    tint: Color = MaterialTheme.colors.onPrimary
+    tint: Color = MaterialTheme.colors.onPrimary,
+    collapseSearchBar: Boolean,
 ) {
     val (expanded, onExpandedChanged) = remember {
         mutableStateOf(expandedInitially)
@@ -47,9 +47,9 @@ fun ExpandableSearchView(
                 onSearchDisplayClosed = onSearchDisplayClosed,
                 onExpandedChanged = onExpandedChanged,
                 modifier = modifier,
-                tint = tint
+                tint = tint,
+                collapseSearchBar = collapseSearchBar
             )
-
             false -> CollapsedSearchView(onExpandedChanged = onExpandedChanged)
         }
     }
@@ -113,6 +113,7 @@ fun ExpandedSearchView(
     onExpandedChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     tint: Color = DarkGray,
+    collapseSearchBar: Boolean,
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -165,51 +166,34 @@ fun ExpandedSearchView(
                     textFieldValue = it
                     onSearchDisplayChanged(it.text)
                 },
+                maxLines = 1,
+                singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(70.dp)
                     .focusRequester(textFieldFocusRequester)
                     .clip(RoundedCornerShape(30.dp))
-                    .align(Alignment.Center),
+                    .align(Alignment.Center)
+                    .onFocusChanged {
+                        if (it.isFocused) {
+                            onExpandedChanged(true)
+                        } else {
+                            onExpandedChanged(false)
+                        }
+                    },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(
-                    onDone = {
+                    onSearch = {
                         focusManager.clearFocus()
                     }
                 ),
                 colors = TextFieldDefaults.textFieldColors(textColor = Color.White)
             )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun CollapsedSearchViewPreview() {
-    MaterialTheme {
-        Surface(
-            color = MaterialTheme.colors.primary
-        ) {
-            CollapsedSearchView({})
-        }
-    }
-}
-
-@Preview
-@Composable
-fun ExpandedSearchViewPreview() {
-    MaterialTheme {
-        Surface(
-            color = Color.Green
-        ) {
-            ExpandedSearchView(
-                searchDisplay = "",
-                onSearchDisplayChanged = {},
-                onExpandedChanged = {},
-                onSearchDisplayClosed = {}
-            )
+            if (collapseSearchBar) {
+                onExpandedChanged(false)
+            }
         }
     }
 }

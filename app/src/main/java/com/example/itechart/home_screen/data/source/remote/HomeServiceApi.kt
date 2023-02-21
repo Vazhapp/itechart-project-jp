@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface HomeServiceApi {
 
-    @GET("v2/best_podcasts?")
+    @GET("v1/best_podcasts?")
     suspend fun getPopularPodcasts(
         @Query("genre_id") genreId:Int,
         @Query("page") page:Int,

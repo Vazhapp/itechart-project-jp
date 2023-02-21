@@ -10,5 +10,5 @@ interface HomeRepository {
         page: Int,
         region: String,
         safeMode: Int
-    ): DataState<PodcastPagingData>
+    ): Result<DataState<PodcastPagingData>>
 }

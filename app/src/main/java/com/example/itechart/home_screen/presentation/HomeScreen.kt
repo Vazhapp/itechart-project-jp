@@ -2,6 +2,7 @@ package com.example.itechart.home_screen.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.*
@@ -25,6 +26,7 @@ fun HomeScreen() {
     val podcastsViewModel: PodcastsViewModel = hiltViewModel()
     val rememberWindowInfo = rememberWindowInfo()
     var collapseSearchBarState by remember { mutableStateOf(false) }
+    val interactionSource = remember { MutableInteractionSource() }
 
     Image(
         modifier = Modifier
@@ -38,7 +40,10 @@ fun HomeScreen() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .clickable {
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+            ) {
                 collapseSearchBarState = true
             },
     ) {
@@ -59,14 +64,13 @@ fun HomeScreen() {
             ShimmerListItem(
                 isLoading = podcastsViewModel.loading.collectAsState().value,
                 contentAfterLoading = {
-                    val podcastList = podcastsViewModel.data.collectAsState()
-                    podcastList.value?.podcasts.let {
-                        Categories(
-                            categories = generateDummyCategories(),
-                            podcasts = it.orEmpty(),
-                            windowType = rememberWindowInfo.screenWidthInfo
-                        )
-                    }
+                    val state = podcastsViewModel.state
+                    Categories(
+                        categories = generateDummyCategories(),
+                        podcasts = state.items,
+                        windowType = rememberWindowInfo.screenWidthInfo,
+                        pagingState = podcastsViewModel.state
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth()

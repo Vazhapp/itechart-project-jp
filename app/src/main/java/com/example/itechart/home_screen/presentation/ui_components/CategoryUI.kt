@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,13 +26,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.itechart.R
 import com.example.itechart.common.ui.WindowInfo
-import com.example.itechart.common.ui.shimmerEffect
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.domain.model.Podcast
+import com.example.itechart.home_screen.presentation.PodcastsViewModel
+import com.example.itechart.home_screen.presentation.ScreenState
 import com.example.itechart.ui.theme.DarkGray
 import com.example.itechart.ui.theme.Gray
 import com.example.itechart.ui.theme.LightBlue
@@ -42,8 +45,10 @@ import com.example.itechart.ui.theme.Purple
 fun Categories(
     categories: List<CategoryModel>,
     podcasts: List<Podcast>,
-    windowType: WindowInfo.WindowType
+    windowType: WindowInfo.WindowType,
+    pagingState: ScreenState
 ) {
+    val podcastViewModel: PodcastsViewModel = hiltViewModel()
     Column(
         modifier = Modifier
             .wrapContentWidth()
@@ -77,9 +82,25 @@ fun Categories(
     )
     LazyRow(modifier = Modifier.height(230.dp)) {
         items(
-            podcasts
-        ) { podcast ->
-            PodcastItem(podcast = podcast)
+            podcasts.size
+        ) { index ->
+            val item = podcasts[index]
+            if (index >= podcasts.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
+                podcastViewModel.loadNextItems()
+            }
+            PodcastItem(podcast = item)
+        }
+        item {
+            if (pagingState.isLoading) {
+                Row(
+                    modifier = Modifier
+                        .height(150.dp)
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
         }
     }
     Text(
@@ -101,9 +122,25 @@ fun Categories(
             .padding(bottom = 16.dp)
     ) {
         items(
-            podcasts
-        ) { podcast ->
-            EpisodeItem(podcast = podcast, windowType = windowType)
+            podcasts.size
+        ) { index ->
+            val item = podcasts[index]
+            if (index >= podcasts.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
+                podcastViewModel.loadNextItems()
+            }
+            EpisodeItem(podcast = item, windowType = windowType)
+        }
+        item {
+            if (pagingState.isLoading) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
         }
     }
 }

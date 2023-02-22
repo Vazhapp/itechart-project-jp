@@ -7,5 +7,7 @@ data class PodcastPagingData(
     val podcasts : List<Podcast>?,
     val hasNext : Boolean?,
     val hasPrevious : Boolean?,
-    val listenNotesUrl: String?
+    val listenNotesUrl: String?,
+    val pageNumber: Int?,
+    val nextPageNumber: Int?,
 )

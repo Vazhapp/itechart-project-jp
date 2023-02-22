@@ -2,7 +2,7 @@ package com.example.itechart.home_screen.data.repository
 
 import com.example.itechart.common.DataState
 import com.example.itechart.common.SuccessMetaData
-import com.example.itechart.home_screen.data.mappers.toDomainModel
+import com.example.itechart.home_screen.data.source.dto.toDomainModel
 import com.example.itechart.home_screen.data.source.remote.HomeServiceApi
 import com.example.itechart.home_screen.domain.model.PodcastPagingData
 import com.example.itechart.home_screen.domain.repository.HomeRepository
@@ -16,10 +16,10 @@ class HomeRepositoryImpl @Inject constructor(
         page: Int,
         region: String,
         safeMode: Int
-    ): DataState<PodcastPagingData> {
-        return DataState.Success(
+    ): Result<DataState<PodcastPagingData>> {
+        return Result.success(DataState.Success(
             SuccessMetaData(),
             homeServiceApi.getPopularPodcasts(genreId, page, region, safeMode).body()?.toDomainModel()
-        )
+        ))
     }
 }

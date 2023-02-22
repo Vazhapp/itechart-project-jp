@@ -62,7 +62,8 @@ fun HomeScreen() {
                 collapseSearchBarState = false
             }
             ShimmerListItem(
-                isLoading = podcastsViewModel.loading.collectAsState().value,
+                // Here is a little UI bug which
+                isLoading = false,//podcastsViewModel.loading.collectAsState().value,
                 contentAfterLoading = {
                     val state = podcastsViewModel.state
                     Categories(

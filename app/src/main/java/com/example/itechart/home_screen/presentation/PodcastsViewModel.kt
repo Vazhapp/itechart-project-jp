@@ -37,9 +37,9 @@ class PodcastsViewModel @Inject constructor(
 
     private val paginator = DefaultPaginator(
         initialKey = state.page,
-        onLoadUpdated = {
-            state = state.copy(isLoading = it)
-            _loading.emit(it)
+        onLoadUpdated = { isLoading ->
+            state = state.copy(isLoading = isLoading)
+            _loading.emit(isLoading)
         },
         onRequest = { nextPage ->
             getPodcastListUseCase(
@@ -56,9 +56,9 @@ class PodcastsViewModel @Inject constructor(
         onSuccess = { items, newKey ->
             _loading.emit(false)
             state = state.copy(
-                items = state.items + items.payload?.podcasts!!,
+                items = state.items + items.payload?.podcasts.orEmpty(),
                 page = newKey,
-                endReached = items.payload.podcasts.isEmpty()
+                endReached = items.payload?.podcasts?.isEmpty() ?: false
             )
         }
     )

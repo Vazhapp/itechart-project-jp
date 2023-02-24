@@ -84,6 +84,8 @@ dependencies {
 
     implementation(libs.bundles.moshi)
 
+    implementation(libs.exoplayer)
+
     implementation(libs.coil)
 
     implementation(libs.compose.navigation)

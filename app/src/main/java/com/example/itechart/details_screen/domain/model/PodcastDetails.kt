@@ -12,4 +12,16 @@ data class PodcastDetails(
     val publisher: String?,
     val title: String?,
     val totalEpisodes: Int?,
-)
+) {
+    constructor(): this(
+        "",
+        "",
+        emptyList(),
+        "",
+        "",
+        0,
+        "",
+        "",
+        0,
+    )
+}

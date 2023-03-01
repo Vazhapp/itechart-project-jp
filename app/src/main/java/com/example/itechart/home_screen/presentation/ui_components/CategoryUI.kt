@@ -1,7 +1,9 @@
 package com.example.itechart.home_screen.presentation.ui_components
 
+import android.util.Log.d
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -190,7 +192,11 @@ fun PodcastItem(
         Image(
             modifier = Modifier
                 .size(150.dp)
-                .clip(RoundedCornerShape(20.dp)),
+                .clip(RoundedCornerShape(20.dp))
+                .clickable {
+                    // Here I've to pass this podcast id on details screen
+                    d("Clicked", podcast.id.orEmpty())
+                },
             painter = rememberImagePainter,
             contentDescription = "Empty",
             contentScale = ContentScale.Crop

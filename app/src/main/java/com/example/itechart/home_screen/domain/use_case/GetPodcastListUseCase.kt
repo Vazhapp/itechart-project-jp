@@ -14,7 +14,7 @@ class GetPodcastListUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         nextPageNumber: Int
-    ): Result<DataState<PodcastPagingData>> {
+    ): Result<PodcastPagingData?> {
         return homeRepository.getPopularPodcasts(GENRE_ID, nextPageNumber, REGION, SAFE_MODE)
     }
 }

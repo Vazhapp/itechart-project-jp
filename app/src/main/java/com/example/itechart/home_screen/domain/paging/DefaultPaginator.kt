@@ -1,14 +1,12 @@
 package com.example.itechart.home_screen.domain.paging
 
-import com.example.itechart.common.DataState
-
 class DefaultPaginator<Key, Item>(
     private val initialKey: Key,
     private inline val onLoadUpdated: suspend (Boolean) -> Unit,
-    private inline val onRequest: suspend (nextKey: Key) -> Result<DataState<Item>>,
+    private inline val onRequest: suspend (nextKey: Key) -> Result<Item>,
     private inline val getNextKey: suspend (Item) -> Key,
     private inline val onError: suspend (Throwable) -> Unit,
-    private inline val onSuccess: suspend (item: DataState<Item>, newKey: Key) -> Unit
+    private inline val onSuccess: suspend (item: Item, newKey: Key) -> Unit
 ): Paginator<Key, Item> {
 
     private var currentKey = initialKey
@@ -28,7 +26,7 @@ class DefaultPaginator<Key, Item>(
             onLoadUpdated(false)
             return
         }
-        currentKey = getNextKey(items.payload!!)
+        currentKey = getNextKey(items)
         onSuccess(items, currentKey)
         onLoadUpdated(false)
     }

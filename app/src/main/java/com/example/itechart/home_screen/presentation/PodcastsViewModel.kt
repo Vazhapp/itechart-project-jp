@@ -56,9 +56,9 @@ class PodcastsViewModel @Inject constructor(
         onSuccess = { items, newKey ->
             _loading.emit(false)
             state = state.copy(
-                items = state.items + items.payload?.podcasts.orEmpty(),
+                items = state.items + items?.podcasts.orEmpty(),
                 page = newKey,
-                endReached = items.payload?.podcasts?.isEmpty() ?: false
+                endReached = items?.podcasts?.isEmpty() ?: false
             )
         }
     )

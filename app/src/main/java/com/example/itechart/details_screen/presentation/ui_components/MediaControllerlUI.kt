@@ -10,7 +10,7 @@ import com.example.itechart.R
 
 @Composable
 fun MediaController(
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier

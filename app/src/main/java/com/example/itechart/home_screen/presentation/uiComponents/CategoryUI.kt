@@ -11,7 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -238,6 +238,10 @@ fun EpisodeItem(
     windowType: WindowInfo.WindowType,
     onStartClick: (podcastId: String) -> Unit,
 ) {
+    var rememberPlayerState by remember {
+        mutableStateOf(true)
+    }
+
     val rememberImagePainter =
         rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
@@ -284,13 +288,16 @@ fun EpisodeItem(
                     )
                 }
                 Image(
-                    painter = painterResource(id = R.drawable.play_icon),
+                    painter = if (rememberPlayerState) painterResource(id = R.drawable.play_icon) else painterResource(
+                        id = R.drawable.pause_icon
+                    ),
                     contentDescription = "Play or pause podcast",
                     modifier = Modifier
                         .height(130.dp)
                         .size(36.dp)
                         .padding(start = 8.dp)
                         .clickable {
+                            rememberPlayerState = !rememberPlayerState
                             onStartClick(podcast.id.orEmpty())
                         },
                     alignment = Alignment.Center

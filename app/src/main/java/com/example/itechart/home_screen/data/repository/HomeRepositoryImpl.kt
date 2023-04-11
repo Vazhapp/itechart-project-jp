@@ -15,6 +15,17 @@ class HomeRepositoryImpl @Inject constructor(
         region: String,
         safeMode: Int
     ): Result<PodcastPagingData?> {
-        return Result.success(homeServiceApi.getPopularPodcasts(genreId, page, region, safeMode).body()?.toDomainModel())
+        return Result.success(
+            homeServiceApi.getPopularPodcasts(genreId, page, region, safeMode).body()
+                ?.toDomainModel()
+        )
+    }
+
+    override suspend fun getPodcastAudio(
+        podcastId: String
+    ): Result<String> {
+        return Result.success(
+            homeServiceApi.getPodcastAudio(podcastId).body()?.episodes?.get(0)?.audio.orEmpty()
+        )
     }
 }

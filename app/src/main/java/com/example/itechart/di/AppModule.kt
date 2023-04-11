@@ -1,12 +1,15 @@
 package com.example.itechart.di
 
+import android.content.Context
 import com.example.itechart.BuildConfig
 import com.example.itechart.common.KeyInterceptor
+import com.example.itechart.common.player.Player
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +27,7 @@ object AppModule {
     fun provideOkHttpClient() = OkHttpClient.Builder()
         .addInterceptor(
             HttpLoggingInterceptor()
-            .apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
+                .apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
         )
         .addInterceptor(KeyInterceptor())
         .build()
@@ -50,4 +53,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    @Singleton
+    fun providePlayer(@ApplicationContext context: Context): Player =
+        Player(context)
 }

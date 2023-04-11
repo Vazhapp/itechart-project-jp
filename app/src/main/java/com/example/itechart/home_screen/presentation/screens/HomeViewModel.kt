@@ -73,8 +73,8 @@ class HomeViewModel @Inject constructor(
         loadNextItems()
     }
 
-    fun onListenStartClick() {
-        d("ClickStart", "PodStarted")
+    fun onListenStartClick(podcastId: String) {
+        d("ClickStart", "PodStarted $podcastId")
     }
 
 //     private fun getPodcastList() {

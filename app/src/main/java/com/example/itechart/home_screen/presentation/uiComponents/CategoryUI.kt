@@ -49,7 +49,7 @@ fun Categories(
     podcasts: List<Podcast>,
     windowType: WindowInfo.WindowType,
     pagingState: ScreenState,
-    onStartClick: () -> Unit
+    onStartClick: (podcastId: String) -> Unit
 ) {
     val podcastViewModel: HomeViewModel = hiltViewModel()
     Column(
@@ -236,7 +236,7 @@ fun PodcastItem(
 fun EpisodeItem(
     podcast: Podcast,
     windowType: WindowInfo.WindowType,
-    onStartClick: () -> Unit,
+    onStartClick: (podcastId: String) -> Unit,
 ) {
     val rememberImagePainter =
         rememberAsyncImagePainter(
@@ -291,7 +291,7 @@ fun EpisodeItem(
                         .size(36.dp)
                         .padding(start = 8.dp)
                         .clickable {
-                            onStartClick()
+                            onStartClick(podcast.id.orEmpty())
                         },
                     alignment = Alignment.Center
                 )

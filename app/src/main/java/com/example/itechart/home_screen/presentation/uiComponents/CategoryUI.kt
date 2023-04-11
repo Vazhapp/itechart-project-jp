@@ -48,7 +48,8 @@ fun Categories(
     categories: List<CategoryModel>,
     podcasts: List<Podcast>,
     windowType: WindowInfo.WindowType,
-    pagingState: ScreenState
+    pagingState: ScreenState,
+    onStartClick: () -> Unit
 ) {
     val podcastViewModel: HomeViewModel = hiltViewModel()
     Column(
@@ -130,7 +131,7 @@ fun Categories(
             if (index >= podcasts.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
                 podcastViewModel.loadNextItems()
             }
-            EpisodeItem(podcast = item, windowType = windowType)
+            EpisodeItem(podcast = item, windowType = windowType, onStartClick = onStartClick)
         }
         item {
             if (pagingState.isLoading) {
@@ -234,7 +235,8 @@ fun PodcastItem(
 @Composable
 fun EpisodeItem(
     podcast: Podcast,
-    windowType: WindowInfo.WindowType
+    windowType: WindowInfo.WindowType,
+    onStartClick: () -> Unit,
 ) {
     val rememberImagePainter =
         rememberAsyncImagePainter(
@@ -287,7 +289,10 @@ fun EpisodeItem(
                     modifier = Modifier
                         .height(130.dp)
                         .size(36.dp)
-                        .padding(start = 8.dp),
+                        .padding(start = 8.dp)
+                        .clickable {
+                            onStartClick()
+                        },
                     alignment = Alignment.Center
                 )
             }

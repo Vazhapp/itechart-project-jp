@@ -1,5 +1,6 @@
 package com.example.itechart.home_screen.presentation.screens
 
+import android.util.Log.d
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -70,6 +71,10 @@ class HomeViewModel @Inject constructor(
     init {
       //  getPodcastList()
         loadNextItems()
+    }
+
+    fun onListenStartClick() {
+        d("ClickStart", "PodStarted")
     }
 
 //     private fun getPodcastList() {

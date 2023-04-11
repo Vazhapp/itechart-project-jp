@@ -70,7 +70,8 @@ fun HomeScreen() {
                         categories = generateDummyCategories(),
                         podcasts = state.items,
                         windowType = rememberWindowInfo.screenWidthInfo,
-                        pagingState = homeViewModel.state
+                        pagingState = homeViewModel.state,
+                        onStartClick = homeViewModel::onListenStartClick
                     )
                 },
                 modifier = Modifier
@@ -80,6 +81,8 @@ fun HomeScreen() {
         }
     }
 }
+
+
 
 fun generateDummyCategories(): List<CategoryModel> =
     listOf(

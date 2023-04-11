@@ -1,4 +1,4 @@
-package com.example.itechart.details_screen.presentation.ui_components
+package com.example.itechart.details_screen.presentation.uiComponents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

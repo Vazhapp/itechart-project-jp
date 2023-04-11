@@ -1,4 +1,4 @@
-package com.example.itechart.details_screen.presentation
+package com.example.itechart.details_screen.presentation.screens
 
 import androidx.compose.runtime.Composable
 

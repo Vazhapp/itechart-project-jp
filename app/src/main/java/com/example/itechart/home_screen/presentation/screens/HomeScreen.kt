@@ -17,9 +17,9 @@ import com.example.itechart.R
 import com.example.itechart.common.ui.ShimmerListItem
 import com.example.itechart.common.ui.rememberWindowInfo
 import com.example.itechart.home_screen.domain.model.CategoryModel
-import com.example.itechart.home_screen.presentation.ui_components.Categories
-import com.example.itechart.home_screen.presentation.ui_components.ExpandableSearchView
-import com.example.itechart.home_screen.presentation.ui_components.Profile
+import com.example.itechart.home_screen.presentation.uiComponents.Categories
+import com.example.itechart.home_screen.presentation.uiComponents.ExpandableSearchView
+import com.example.itechart.home_screen.presentation.uiComponents.Profile
 
 @Composable
 fun HomeScreen() {

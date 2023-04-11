@@ -35,8 +35,8 @@ import com.example.itechart.R
 import com.example.itechart.common.ui.WindowInfo
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.domain.model.Podcast
-import com.example.itechart.home_screen.presentation.PodcastsViewModel
-import com.example.itechart.home_screen.presentation.ScreenState
+import com.example.itechart.home_screen.presentation.screens.HomeViewModel
+import com.example.itechart.home_screen.presentation.screens.ScreenState
 import com.example.itechart.ui.theme.DarkGray
 import com.example.itechart.ui.theme.Gray
 import com.example.itechart.ui.theme.LightBlue
@@ -50,7 +50,7 @@ fun Categories(
     windowType: WindowInfo.WindowType,
     pagingState: ScreenState
 ) {
-    val podcastViewModel: PodcastsViewModel = hiltViewModel()
+    val podcastViewModel: HomeViewModel = hiltViewModel()
     Column(
         modifier = Modifier
             .wrapContentWidth()

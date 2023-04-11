@@ -1,4 +1,4 @@
-package com.example.itechart.home_screen.presentation
+package com.example.itechart.home_screen.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -23,7 +23,7 @@ import com.example.itechart.home_screen.presentation.ui_components.Profile
 
 @Composable
 fun HomeScreen() {
-    val podcastsViewModel: PodcastsViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val rememberWindowInfo = rememberWindowInfo()
     var collapseSearchBarState by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -65,12 +65,12 @@ fun HomeScreen() {
                 // Here is a little UI bug which
                 isLoading = false,//podcastsViewModel.loading.collectAsState().value,
                 contentAfterLoading = {
-                    val state = podcastsViewModel.state
+                    val state = homeViewModel.state
                     Categories(
                         categories = generateDummyCategories(),
                         podcasts = state.items,
                         windowType = rememberWindowInfo.screenWidthInfo,
-                        pagingState = podcastsViewModel.state
+                        pagingState = homeViewModel.state
                     )
                 },
                 modifier = Modifier

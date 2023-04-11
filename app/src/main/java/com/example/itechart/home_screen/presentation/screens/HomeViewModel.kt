@@ -1,4 +1,4 @@
-package com.example.itechart.home_screen.presentation
+package com.example.itechart.home_screen.presentation.screens
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +10,6 @@ import com.example.itechart.home_screen.domain.model.PodcastPagingData
 import com.example.itechart.home_screen.domain.paging.DefaultPaginator
 import com.example.itechart.home_screen.domain.use_case.GetPodcastListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -19,8 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PodcastsViewModel @Inject constructor(
-    private val ioDispatcher: CoroutineDispatcher,
+class HomeViewModel @Inject constructor(
     private val getPodcastListUseCase: GetPodcastListUseCase,
 ) : ViewModel() {
 

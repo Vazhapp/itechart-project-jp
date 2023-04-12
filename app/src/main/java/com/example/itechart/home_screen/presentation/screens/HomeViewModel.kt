@@ -86,6 +86,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun onListenPauseClick() {
+        player.pause()
+    }
+
 //     private fun getPodcastList() {
 //        viewModelScope.launch(ioDispatcher) {
 //            when(val result = getPodcastListUseCase()) {

@@ -22,4 +22,7 @@ class Player @Inject constructor(
         player.play()
     }
 
+    fun pause() {
+        player.pause()
+    }
 }

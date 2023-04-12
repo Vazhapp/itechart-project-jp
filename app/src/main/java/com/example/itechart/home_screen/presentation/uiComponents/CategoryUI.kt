@@ -49,7 +49,8 @@ fun Categories(
     podcasts: List<Podcast>,
     windowType: WindowInfo.WindowType,
     pagingState: ScreenState,
-    onStartClick: (podcastId: String) -> Unit
+    onStartClick: (podcastId: String) -> Unit,
+    onPauseClick: () -> Unit
 ) {
     val podcastViewModel: HomeViewModel = hiltViewModel()
     Column(
@@ -131,7 +132,7 @@ fun Categories(
             if (index >= podcasts.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
                 podcastViewModel.loadNextItems()
             }
-            EpisodeItem(podcast = item, windowType = windowType, onStartClick = onStartClick)
+            EpisodeItem(podcast = item, windowType = windowType, onStartClick = onStartClick, onPauseClick)
         }
         item {
             if (pagingState.isLoading) {
@@ -237,6 +238,7 @@ fun EpisodeItem(
     podcast: Podcast,
     windowType: WindowInfo.WindowType,
     onStartClick: (podcastId: String) -> Unit,
+    onPauseClick: () -> Unit
 ) {
     var rememberPlayerState by remember {
         mutableStateOf(true)
@@ -298,7 +300,12 @@ fun EpisodeItem(
                         .padding(start = 8.dp)
                         .clickable {
                             rememberPlayerState = !rememberPlayerState
-                            onStartClick(podcast.id.orEmpty())
+                            if (rememberPlayerState) {
+                                onPauseClick()
+                            } else {
+                                onStartClick(podcast.id.orEmpty())
+                            }
+
                         },
                     alignment = Alignment.Center
                 )

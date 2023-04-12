@@ -71,7 +71,8 @@ fun HomeScreen() {
                         podcasts = state.items,
                         windowType = rememberWindowInfo.screenWidthInfo,
                         pagingState = homeViewModel.state,
-                        onStartClick = homeViewModel::onListenStartClick
+                        onStartClick = homeViewModel::onListenStartClick,
+                        onPauseClick = homeViewModel::onListenPauseClick,
                     )
                 },
                 modifier = Modifier

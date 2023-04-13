@@ -28,6 +28,8 @@ fun HomeScreen() {
     var collapseSearchBarState by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
 
+    val podcastAudioUri by homeViewModel.podcastAudioUri.collectAsState()
+
     Image(
         modifier = Modifier
             .fillMaxSize()
@@ -71,8 +73,9 @@ fun HomeScreen() {
                         podcasts = state.items,
                         windowType = rememberWindowInfo.screenWidthInfo,
                         pagingState = homeViewModel.state,
-                        onStartClick = homeViewModel::onListenStartClick,
-                        onPauseClick = homeViewModel::onListenPauseClick,
+//                        onStartClick = homeViewModel::onListenStartClick,
+//                        onPauseClick = homeViewModel::onListenPauseClick,
+                        //podcastAudioUri = podcastAudioUri,
                     )
                 },
                 modifier = Modifier

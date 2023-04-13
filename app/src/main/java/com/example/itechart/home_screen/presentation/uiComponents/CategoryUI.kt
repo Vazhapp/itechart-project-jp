@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -42,6 +43,8 @@ import com.example.itechart.ui.theme.DarkGray
 import com.example.itechart.ui.theme.Gray
 import com.example.itechart.ui.theme.LightBlue
 import com.example.itechart.ui.theme.Purple
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
 
 
 @Composable
@@ -50,8 +53,9 @@ fun Categories(
     podcasts: List<Podcast>,
     windowType: WindowInfo.WindowType,
     pagingState: ScreenState,
-    onStartClick: (podcastId: String) -> Unit,
-    onPauseClick: () -> Unit
+//    onStartClick: (podcastId: String) -> Unit,
+//    onPauseClick: () -> Unit,
+  //  podcastAudioUri: String,
 ) {
     val podcastViewModel: HomeViewModel = hiltViewModel()
     Column(
@@ -133,7 +137,8 @@ fun Categories(
             if (index >= podcasts.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
                 podcastViewModel.loadNextItems()
             }
-            EpisodeItem(podcast = item, windowType = windowType, "", onStartClick = onStartClick, onPauseClick)
+            // just for test now. uri will be get from viewModel
+            EpisodeItem(podcast = item, windowType = windowType, "https://www.listennotes.com/e/p/26214bd10bdb4fa3af5fd3cc694288cd/")
         }
         item {
             if (pagingState.isLoading) {
@@ -239,18 +244,33 @@ fun EpisodeItem(
     podcast: Podcast,
     windowType: WindowInfo.WindowType,
     podcastAudioUri: String,
-    onStartClick: (podcastId: String) -> Unit,
-    onPauseClick: () -> Unit
+//    onStartClick: (podcastId: String) -> Unit,
+//    onPauseClick: () -> Unit
 ) {
     var rememberPlayerState by remember {
         mutableStateOf(true)
     }
+
+    val context = LocalContext.current
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
     val rememberImagePainter =
         rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(podcast.image.orEmpty()).build(),
         )
+
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply {
+            setMediaItem(
+                MediaItem.fromUri(
+                    podcastAudioUri
+                )
+            )
+            prepare()
+        }
+    }
+
     when (windowType) {
         WindowInfo.WindowType.Compact -> {
             Row(
@@ -295,7 +315,7 @@ fun EpisodeItem(
                 AnimatedVisibility(visible = rememberPlayerState) {
                     Image(
                         painter = painterResource(id = R.drawable.play_icon),
-                        contentDescription = "Play or pause podcast",
+                        contentDescription = "Play",
                         modifier = Modifier
                             .height(130.dp)
                             .size(36.dp)
@@ -303,9 +323,9 @@ fun EpisodeItem(
                             .clickable {
                                 rememberPlayerState = !rememberPlayerState
                                 if (rememberPlayerState) {
-                                    onPauseClick()
+                                 //   onPauseClick()
                                 } else {
-                                    onStartClick(podcast.id.orEmpty())
+                                  exoPlayer.play()//  onStartClick(podcast.id.orEmpty())
                                 }
                             },
                         alignment = Alignment.Center
@@ -315,7 +335,7 @@ fun EpisodeItem(
                 AnimatedVisibility(visible = !rememberPlayerState) {
                     Image(
                         painter = painterResource(id = R.drawable.pause_icon),
-                        contentDescription = "Play or pause podcast",
+                        contentDescription = "Pause",
                         modifier = Modifier
                             .height(130.dp)
                             .size(36.dp)
@@ -323,9 +343,9 @@ fun EpisodeItem(
                             .clickable {
                                 rememberPlayerState = !rememberPlayerState
                                 if (rememberPlayerState) {
-                                    onPauseClick()
+                                    exoPlayer.pause()//onPauseClick()
                                 } else {
-                                    onStartClick(podcast.id.orEmpty())
+                                 //   onStartClick(podcast.id.orEmpty())
                                 }
                             },
                         alignment = Alignment.Center,

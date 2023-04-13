@@ -1,6 +1,7 @@
 package com.example.itechart.home_screen.presentation.uiComponents
 
 import android.util.Log.d
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -132,7 +133,7 @@ fun Categories(
             if (index >= podcasts.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
                 podcastViewModel.loadNextItems()
             }
-            EpisodeItem(podcast = item, windowType = windowType, onStartClick = onStartClick, onPauseClick)
+            EpisodeItem(podcast = item, windowType = windowType, "", onStartClick = onStartClick, onPauseClick)
         }
         item {
             if (pagingState.isLoading) {
@@ -237,6 +238,7 @@ fun PodcastItem(
 fun EpisodeItem(
     podcast: Podcast,
     windowType: WindowInfo.WindowType,
+    podcastAudioUri: String,
     onStartClick: (podcastId: String) -> Unit,
     onPauseClick: () -> Unit
 ) {
@@ -289,26 +291,46 @@ fun EpisodeItem(
                         color = Gray,
                     )
                 }
-                Image(
-                    painter = if (rememberPlayerState) painterResource(id = R.drawable.play_icon) else painterResource(
-                        id = R.drawable.pause_icon
-                    ),
-                    contentDescription = "Play or pause podcast",
-                    modifier = Modifier
-                        .height(130.dp)
-                        .size(36.dp)
-                        .padding(start = 8.dp)
-                        .clickable {
-                            rememberPlayerState = !rememberPlayerState
-                            if (rememberPlayerState) {
-                                onPauseClick()
-                            } else {
-                                onStartClick(podcast.id.orEmpty())
-                            }
 
-                        },
-                    alignment = Alignment.Center
-                )
+                AnimatedVisibility(visible = rememberPlayerState) {
+                    Image(
+                        painter = painterResource(id = R.drawable.play_icon),
+                        contentDescription = "Play or pause podcast",
+                        modifier = Modifier
+                            .height(130.dp)
+                            .size(36.dp)
+                            .padding(start = 8.dp)
+                            .clickable {
+                                rememberPlayerState = !rememberPlayerState
+                                if (rememberPlayerState) {
+                                    onPauseClick()
+                                } else {
+                                    onStartClick(podcast.id.orEmpty())
+                                }
+                            },
+                        alignment = Alignment.Center
+                    )
+                }
+
+                AnimatedVisibility(visible = !rememberPlayerState) {
+                    Image(
+                        painter = painterResource(id = R.drawable.pause_icon),
+                        contentDescription = "Play or pause podcast",
+                        modifier = Modifier
+                            .height(130.dp)
+                            .size(36.dp)
+                            .padding(start = 8.dp)
+                            .clickable {
+                                rememberPlayerState = !rememberPlayerState
+                                if (rememberPlayerState) {
+                                    onPauseClick()
+                                } else {
+                                    onStartClick(podcast.id.orEmpty())
+                                }
+                            },
+                        alignment = Alignment.Center,
+                    )
+                }
             }
         }
         WindowInfo.WindowType.Expanded -> {

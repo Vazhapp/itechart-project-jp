@@ -55,7 +55,7 @@ fun Categories(
     pagingState: ScreenState,
 //    onStartClick: (podcastId: String) -> Unit,
 //    onPauseClick: () -> Unit,
-  //  podcastAudioUri: String,
+    //  podcastAudioUri: String,
 ) {
     val podcastViewModel: HomeViewModel = hiltViewModel()
     Column(
@@ -138,7 +138,11 @@ fun Categories(
                 podcastViewModel.loadNextItems()
             }
             // just for test now. uri will be get from viewModel
-            EpisodeItem(podcast = item, windowType = windowType, "https://www.listennotes.com/e/p/26214bd10bdb4fa3af5fd3cc694288cd/")
+            EpisodeItem(
+                podcast = item,
+                windowType = windowType,
+                "https://www.listennotes.com/e/p/26214bd10bdb4fa3af5fd3cc694288cd/"
+            )
         }
         item {
             if (pagingState.isLoading) {
@@ -322,11 +326,7 @@ fun EpisodeItem(
                             .padding(start = 8.dp)
                             .clickable {
                                 rememberPlayerState = !rememberPlayerState
-                                if (rememberPlayerState) {
-                                 //   onPauseClick()
-                                } else {
-                                  exoPlayer.play()//  onStartClick(podcast.id.orEmpty())
-                                }
+                                exoPlayer.play()
                             },
                         alignment = Alignment.Center
                     )
@@ -342,17 +342,14 @@ fun EpisodeItem(
                             .padding(start = 8.dp)
                             .clickable {
                                 rememberPlayerState = !rememberPlayerState
-                                if (rememberPlayerState) {
-                                    exoPlayer.pause()//onPauseClick()
-                                } else {
-                                 //   onStartClick(podcast.id.orEmpty())
-                                }
+                                exoPlayer.pause()
                             },
                         alignment = Alignment.Center,
                     )
                 }
             }
         }
+
         WindowInfo.WindowType.Expanded -> {
             Row(
                 modifier = Modifier
@@ -405,6 +402,7 @@ fun EpisodeItem(
                 )
             }
         }
+
         WindowInfo.WindowType.Medium -> {
             Row(
                 modifier = Modifier

@@ -45,6 +45,7 @@ import com.example.itechart.ui.theme.LightBlue
 import com.example.itechart.ui.theme.Purple
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 
 
 @Composable
@@ -346,6 +347,13 @@ fun EpisodeItem(
                             },
                         alignment = Alignment.Center,
                     )
+                }
+                DisposableEffect(
+                    exoPlayer
+                ) {
+                    onDispose {
+                        exoPlayer.release()
+                    }
                 }
             }
         }

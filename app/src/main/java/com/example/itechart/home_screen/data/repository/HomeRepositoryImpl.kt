@@ -1,9 +1,12 @@
 package com.example.itechart.home_screen.data.repository
 
+import android.util.Log.d
+import com.example.itechart.common.Resource
 import com.example.itechart.home_screen.data.source.dto.toDomainModel
 import com.example.itechart.home_screen.data.source.remote.HomeServiceApi
 import com.example.itechart.home_screen.domain.model.PodcastPagingData
 import com.example.itechart.home_screen.domain.repository.HomeRepository
+import java.lang.Exception
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
@@ -23,9 +26,11 @@ class HomeRepositoryImpl @Inject constructor(
 
     override suspend fun getPodcastAudio(
         podcastId: String
-    ): Result<String> {
-        return Result.success(
-            homeServiceApi.getPodcastAudio(podcastId).body()?.episodes?.get(0)?.audio.orEmpty()
-        )
+    ): Resource<String> {
+        return try {
+            Resource.Success(homeServiceApi.getPodcastAudio(podcastId).episodes!![0]!!.audio)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "")
+        }
     }
 }

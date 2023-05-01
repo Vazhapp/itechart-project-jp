@@ -13,6 +13,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.itechart.R
 import com.example.itechart.common.ui.ShimmerListItem
 import com.example.itechart.common.ui.rememberWindowInfo
@@ -22,8 +23,10 @@ import com.example.itechart.home_screen.presentation.uiComponents.ExpandableSear
 import com.example.itechart.home_screen.presentation.uiComponents.Profile
 
 @Composable
-fun HomeScreen() {
-    val homeViewModel: HomeViewModel = hiltViewModel()
+fun HomeScreen(
+    homeViewModel: HomeViewModel,
+    navController: NavController
+) {
     val rememberWindowInfo = rememberWindowInfo()
     var collapseSearchBarState by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -75,7 +78,10 @@ fun HomeScreen() {
                         pagingState = homeViewModel.state,
 //                        onStartClick = homeViewModel::onListenStartClick,
 //                        onPauseClick = homeViewModel::onListenPauseClick,
-                        //podcastAudioUri = podcastAudioUri,
+                        onStartClick = homeViewModel::getPodcastAudioUri,
+                        podcastAudioUri =podcastAudioUri,// homeViewModel.podcastAudioUri.collectAsState().value,
+                        navController = navController,
+                        onPodcastClicked = homeViewModel::getPodcastAudioUri
                     )
                 },
                 modifier = Modifier
@@ -85,7 +91,6 @@ fun HomeScreen() {
         }
     }
 }
-
 
 
 fun generateDummyCategories(): List<CategoryModel> =

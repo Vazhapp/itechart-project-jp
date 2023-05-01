@@ -1,18 +1,32 @@
 package com.example.itechart.home_screen.presentation.uiComponents
 
-import android.util.Log.d
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,9 +45,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.itechart.R
+import com.example.itechart.common.navigation.Screens
 import com.example.itechart.common.ui.WindowInfo
 import com.example.itechart.home_screen.domain.model.CategoryModel
 import com.example.itechart.home_screen.domain.model.Podcast
@@ -45,7 +61,6 @@ import com.example.itechart.ui.theme.LightBlue
 import com.example.itechart.ui.theme.Purple
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
 
 
 @Composable
@@ -54,9 +69,11 @@ fun Categories(
     podcasts: List<Podcast>,
     windowType: WindowInfo.WindowType,
     pagingState: ScreenState,
-//    onStartClick: (podcastId: String) -> Unit,
+    onStartClick: (podcastId: String) -> Unit,
+    onPodcastClicked: (podcastId: String) -> Unit,
 //    onPauseClick: () -> Unit,
-    //  podcastAudioUri: String,
+    podcastAudioUri: String,
+    navController: NavController
 ) {
     val podcastViewModel: HomeViewModel = hiltViewModel()
     Column(
@@ -98,7 +115,7 @@ fun Categories(
             if (index >= podcasts.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
                 podcastViewModel.loadNextItems()
             }
-            PodcastItem(podcast = item)
+            PodcastItem(podcast = item, navController = navController, podcastAudioUri, onPodcastClicked)
         }
         item {
             if (pagingState.isLoading) {
@@ -142,7 +159,8 @@ fun Categories(
             EpisodeItem(
                 podcast = item,
                 windowType = windowType,
-                "https://www.listennotes.com/e/p/26214bd10bdb4fa3af5fd3cc694288cd/"
+                podcastAudioUri,
+                onStartClick = onStartClick
             )
         }
         item {
@@ -189,7 +207,10 @@ fun CategoryItem(categoryModel: CategoryModel) {
 
 @Composable
 fun PodcastItem(
-    podcast: Podcast
+    podcast: Podcast,
+    navController: NavController,
+    podcastAudioUri: String,
+    onPodcastClicked: (podcastId: String) -> Unit,
 ) {
     val rememberImagePainter =
         rememberAsyncImagePainter(
@@ -207,8 +228,15 @@ fun PodcastItem(
                 .size(150.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .clickable {
-                    // Here I've to pass this podcast id on details screen
-                    d("Clicked", podcast.id.orEmpty())
+                    onPodcastClicked(podcast.id.orEmpty())
+                  //  if (podcastAudioUri.isNotBlank()) {
+                        navController.navigate(
+                            Screens.DetailsScreen.passPodcastIdAndAudioUri(
+                                podcastId = podcast.id.orEmpty(),
+                                podcastAudioUri = "podcastAudioUri"
+                            )
+                        )
+                   // }
                 },
             painter = rememberImagePainter,
             contentDescription = "Empty",
@@ -249,7 +277,7 @@ fun EpisodeItem(
     podcast: Podcast,
     windowType: WindowInfo.WindowType,
     podcastAudioUri: String,
-//    onStartClick: (podcastId: String) -> Unit,
+    onStartClick: (podcastId: String) -> Unit,
 //    onPauseClick: () -> Unit
 ) {
     var rememberPlayerState by remember {

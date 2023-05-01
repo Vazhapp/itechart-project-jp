@@ -19,5 +19,5 @@ interface HomeServiceApi {
     @GET("v1/podcasts/{podcastId}")
     suspend fun getPodcastAudio(
         @Path("podcastId") podcastId: String
-    ): Response<PodcastDetailsDTO>
+    ): PodcastDetailsDTO
 }

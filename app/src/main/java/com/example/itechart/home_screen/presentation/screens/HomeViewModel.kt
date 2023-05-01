@@ -1,11 +1,13 @@
 package com.example.itechart.home_screen.presentation.screens
 
+import android.util.Log.d
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.itechart.common.Resource
 import com.example.itechart.common.player.Player
 import com.example.itechart.home_screen.domain.model.Podcast
 import com.example.itechart.home_screen.domain.model.PodcastPagingData
@@ -27,7 +29,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getPodcastListUseCase: GetPodcastListUseCase,
     private val getPodcastAudioUseCase: GetPodcastAudioUseCase,
-    private val player: Player,
 ) : ViewModel() {
 
     private val _podcastAudioUri = MutableStateFlow("")
@@ -79,51 +80,27 @@ class HomeViewModel @Inject constructor(
     }
 
     init {
-        //  getPodcastList()
         loadNextItems()
     }
-
-//    fun onListenStartClick(podcastId: String) {
-//        viewModelScope.launch {
-//            player.play(
-//                getPodcastAudioUseCase(
-//                    podcastId
-//                ).orEmpty()
-//            )
-//        }
-//    }
-//
-//    fun onListenPauseClick() {
-//        player.pause()
-//    }
 
     fun getPodcastAudioUri(
         podcastId: String
     ) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-               _podcastAudioUri.emit(getPodcastAudioUseCase(podcastId = podcastId).orEmpty())
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = getPodcastAudioUseCase.invoke(podcastId)) {
+                is Resource.Success -> {
+                    _podcastAudioUri.emit(result.data!!)
+                }
+
+                is Resource.Error -> {
+                    d("Error Appear", "AEERAA")
+                }
             }
+//            _podcastAudioUri.emit(
+//                getPodcastAudioUseCase(podcastId = podcastId).orEmpty()
+//            )
         }
     }
-
-//     private fun getPodcastList() {
-//        viewModelScope.launch(ioDispatcher) {
-//            when(val result = getPodcastListUseCase()) {
-//                is DataState.Error ->  {
-//                    _error.emit(R.string.error_generic)
-//                    _loading.emit(false)
-//                }
-//                is DataState.Success -> result.payload?.apply {
-//                    _data.emit(this)
-//                    _loading.emit(false)
-//                }
-//                is DataState.Loading -> {
-//                    _loading.emit(true)
-//                }
-//            }
-//        }
-//    }
 }
 
 data class ScreenState(

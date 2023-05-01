@@ -1,5 +1,6 @@
 package com.example.itechart.home_screen.domain.repository
 
+import com.example.itechart.common.Resource
 import com.example.itechart.home_screen.domain.model.PodcastPagingData
 
 interface HomeRepository {
@@ -12,5 +13,5 @@ interface HomeRepository {
 
     suspend fun getPodcastAudio(
         podcastId: String
-    ): Result<String?>
+    ): Resource<String>
 }

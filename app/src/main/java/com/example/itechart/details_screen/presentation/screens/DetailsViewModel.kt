@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class DetailsScreenUiState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val podcastAudioUri: String = "",
 )
 
@@ -30,9 +30,6 @@ class DetailsViewModel @Inject constructor(
         podcastId: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            _uiState.update {
-                it.copy(isLoading = true)
-            }
             when (val result = getPodcastAudioUseCase(podcastId)) {
                 is Resource.Success -> {
                     _uiState.update {

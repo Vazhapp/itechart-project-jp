@@ -41,23 +41,23 @@ fun DetailsScreen(
     podcastId: String,
     podcastAudioUri: String
 ) {
-    val contenxt = LocalContext.current
-    val exoPlayer = remember {
-        ExoPlayer.Builder(contenxt).build().apply {
-            setMediaItem(
-                MediaItem.fromUri(
-                    podcastAudioUri
-                )
-            )
-            prepare()
-        }
-    }
+//    val contenxt = LocalContext.current
+//    val exoPlayer = remember {
+//        ExoPlayer.Builder(contenxt).build().apply {
+//            setMediaItem(
+//                MediaItem.fromUri(
+//                    podcastAudioUri
+//                )
+//            )
+//            prepare()
+//        }
+//    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        MediaController(podcastId = podcastId, podcastAudioUri = podcastAudioUri, exopl = exoPlayer)
+        MediaController(podcastId = podcastId, podcastAudioUri = podcastAudioUri)
     }
 }
